@@ -1,0 +1,333 @@
+{
+  "@@locale": "en",
+  "appTitle": "Factory Check",
+  "machinesTitle": "Machines",
+  "incidentsTitle": "Calls",
+  "logout": "Logout",
+  "language": "Language",
+  "languageSystem": "System",
+  "languageTurkish": "Turkish",
+  "languageEnglish": "English",
+  "languagePolish": "Polish",
+  "roleLabel": "role: {role}",
+  "@roleLabel": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentReport": "Report fault",
+  "incidentRepair": "Report repair",
+  "machineStatus": "Machine status",
+  "selectedMachine": "Selected machine: {machine}",
+  "@selectedMachine": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "noActiveIncidentNote": "Note: There is no active incident for this machine.",
+  "send": "Send",
+  "cancel": "Cancel",
+  "confirmSend": "Yes, send it",
+  "statusOpen": "Open",
+  "statusInProgress": "In progress",
+  "statusResolved": "Resolved",
+  "statusStopRequired": "Stop required",
+  "statusNeedTechnician": "Technician needed",
+  "categoryRed": "Red",
+  "categoryYellow": "Yellow",
+  "categoryBlue": "Blue",
+  "categoryGreen": "Green",
+  "loginWelcome": "Welcome",
+  "loginSubtitle": "Sign in to continue",
+  "companyIdLabel": "Company ID",
+  "pinLabel": "PIN",
+  "loginButton": "Login",
+  "loginMissingFields": "Enter your account and password.",
+  "loginNoUserDoc": "No record at users/'{uid}'. Add a role in Firestore.",
+  "loginError": "Login error: {code}",
+  "@loginError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "machinesEmpty": "No machines.",
+  "incidentsEmpty": "No incidents yet.",
+  "error": "Error: {msg}",
+  "@error": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFormSubtitle": "Fault report form",
+  "repairFormSubtitle": "Repair report form",
+  "errorCodeLabel": "Fault code",
+  "categoryLabel": "Category",
+  "choose": "Choose",
+  "pickDateTime": "Pick date/time",
+  "reportedByLabel": "Who reported it (name)",
+  "writeName": "Enter a name",
+  "machineCanRun": "Can the machine still run?",
+  "descriptionLabel": "Description (issue / symptoms)",
+  "redDescMin15": "For Red, description must be at least 15 characters",
+  "photoOptional": "Photo (optional)",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "noPhotosYet": "No photos added yet.",
+  "photosUploading": "Uploading photos...",
+  "summaryTitle": "Summary",
+  "summaryMachine": "Machine",
+  "summaryErrorCode": "Fault code",
+  "summaryCategory": "Category",
+  "summaryDateTime": "Date/time",
+  "summaryReportedBy": "Reported by",
+  "summaryCanRun": "Can run",
+  "summaryPhotos": "Photos",
+  "yes": "yes",
+  "no": "no",
+  "mustConfirmBeforeSend": "Confirm before sending.",
+  "alreadyHasActiveIncident": "This machine already has an active incident: {id}",
+  "@alreadyHasActiveIncident": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentCreatedButNoId": "Incident was created but no id was returned (weird).",
+  "faultReported": "Fault reported.",
+  "faultAndPhotosUploaded": "Fault + photo(s) uploaded.",
+  "submitError": "Submit error: {msg}",
+  "@submitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairNoActiveIncidentInfo": "No active incident for this machine. You can still submit a repair note.",
+  "repairActiveFaultTitle": "Active fault",
+  "repairSubmitted": "Repair submitted (resolved).",
+  "repairSubmitError": "Repair submit error: {msg}",
+  "@repairSubmitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairedByLabel": "Who repaired it (name)",
+  "machineRunsAfterLabel": "Is the machine running?",
+  "needsTeamLabel": "Need extra team/technician?",
+  "repairNotesLabel": "Notes (what was done / status)",
+  "activeFaultDetailTitle": "Call details",
+  "overview": "Overview",
+  "calls": "Calls",
+  "history": "History",
+  "all": "All",
+  "mine": "Assigned to me",
+  "searchMachines": "Search machine or section",
+  "activeCalls": "Active calls",
+  "stoppedMachines": "Reported stopped",
+  "waitingCalls": "Waiting for support",
+  "unassigned": "Not assigned yet",
+  "assignedTo": "Assigned to",
+  "team": "Responsible team",
+  "kind": "Call type",
+  "newCall": "Create call",
+  "claim": "Acknowledge & claim",
+  "startWork": "Start work",
+  "waitForSupport": "Wait for support",
+  "resumeWork": "Resume work",
+  "resolveCall": "Resolve call",
+  "statusAcknowledged": "Acknowledged",
+  "statusWaiting": "Waiting for support",
+  "teamOperator": "Operator",
+  "teamMaintenance": "Maintenance",
+  "teamQuality": "Quality",
+  "teamWarehouse": "Warehouse / materials",
+  "kindFault": "Fault",
+  "kindQuality": "Quality issue",
+  "kindMaterial": "Material request",
+  "kindSupport": "Support request",
+  "productionStopped": "Production stopped",
+  "productionRunning": "Production running",
+  "stateUnknown": "Operating state not confirmed",
+  "productionState": "Reported production state",
+  "noActiveCalls": "No active calls",
+  "noResults": "No results",
+  "noHistory": "No completed calls",
+  "addNote": "Add note",
+  "timeline": "Activity",
+  "noteHint": "Status, waiting reason or handover information",
+  "waitingReason": "Reason for waiting",
+  "resolutionNotes": "What was done?",
+  "runningConfirmed": "I confirm production is running",
+  "resolveHelp": "Use waiting status if production is still stopped or more support is needed.",
+  "recordedAt": "Recorded at",
+  "downtime": "Reported downtime",
+  "elapsed": "Elapsed time",
+  "minutes": "min",
+  "existingCall": "Opened the existing call. Add new information as a note.",
+  "cachedData": "Showing cached data. Check your connection for current status.",
+  "onlineRequired": "Could not complete the action. Check your connection and retry.",
+  "saved": "Saved",
+  "retry": "Retry",
+  "photosPartial": "Call saved, but photos could not be uploaded. Retry the photos below.",
+  "retryPhotos": "Retry photo upload",
+  "openCall": "Open call",
+  "machineList": "Machine list",
+  "factoryMap": "Factory map",
+  "callDescription": "What happened or what is needed?",
+  "codeOptional": "Fault code (optional)",
+  "signInAccount": "Email or company code",
+  "password": "Password / PIN",
+  "sessionError": "Could not load your account profile. Check your connection and user record.",
+  "notificationUnavailable": "Phone notifications could not be set up. You can follow in-app call alerts and the live list.",
+  "errorForbidden": "You do not have permission for this action.",
+  "errorAssigned": "Another worker has claimed this call.",
+  "errorStale": "This is no longer the current call for this machine. Refresh the list.",
+  "errorTransition": "The call status has changed. Check its current state.",
+  "errorTime": "Time cannot be in the future or before the start.",
+  "errorNote": "Please enter a short description.",
+  "errorRunning": "Production must be confirmed running before resolution.",
+  "notFound": "Record not found.",
+  "photoLimit": "You can attach up to 5 photos.",
+  "handover": "Shift handover",
+  "handoverHelp": "Record shift notes and outstanding calls for the incoming shift to acknowledge.",
+  "productionResume": "Production resumed",
+  "productionStop": "Report a stop",
+  "confirmState": "Confirm that you want to update the reported production state.",
+  "reportSummary": "Call summary",
+  "roleViewer": "Viewer",
+  "roleSupervisor": "Supervisor",
+  "roleWatcher": "Monitoring team",
+  "roleAdmin": "Administrator",
+  "noActivity": "No activity yet",
+  "createdEvent": "Call created",
+  "photoEvent": "Photo attached",
+  "noteEvent": "Note added",
+  "changedEvent": "Status changed",
+  "allTeams": "All teams",
+  "newHandover": "Create handover",
+  "noHandovers": "No handovers yet.",
+  "handoverFrom": "Handed over by",
+  "handoverReceived": "Received",
+  "handoverPending": "Awaiting receipt",
+  "loadMore": "Load more",
+  "newHandoverHelp": "Name the shift, leave notes for the incoming team and select calls to hand over.",
+  "shiftLabel": "Shift name / hours",
+  "shiftHint": "E.g. 11 October · Night 22:00–06:00",
+  "handoverNotes": "Shift notes",
+  "handoverNotesHint": "Pending materials, machines to check, important observations…",
+  "selectHandoverCalls": "Calls to hand over ({count}/6)",
+  "@selectHandoverCalls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSelectionHelp": "Select up to 6 active calls. You can also leave shift notes without selecting calls.",
+  "saveHandover": "Save handover",
+  "acceptHandover": "Receive handover",
+  "handoverAcceptHelp": "Your receipt will be recorded. Selected active calls still assigned to the sender will transfer to you. Calls owned by others will stay with them.",
+  "handoverReadReceiptHelp": "Your receipt of the shift notes will be recorded. The monitoring role does not transfer call ownership.",
+  "handoverTransferred": "Active calls transferred to recipient: {count}",
+  "@handoverTransferred": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSnapshotHelp": "The details below reflect the time of handover. Open a call to see its current state.",
+  "noHandoverCalls": "This handover contains shift notes only.",
+  "errorHandover": "Check the shift details. A maximum of 6 calls can be included.",
+  "errorHandoverChanged": "A selected call is no longer active. Your notes are preserved; select calls again from the current list.",
+  "errorHandoverAccepted": "Another user has already received this handover.",
+  "errorHandoverSelf": "Another worker must receive your handover.",
+  "handoverEvent": "Owner changed through shift handover",
+  "reports": "Reports",
+  "reportIntro": "Review calls and reported machine downtime for a date range.",
+  "today": "Today",
+  "lastSevenDays": "Last 7 days",
+  "lastThirtyDays": "Last 30 days",
+  "callsOpenedInPeriod": "Calls opened",
+  "callsResolvedInPeriod": "Calls resolved",
+  "machineDowntimeTotal": "Total machine downtime",
+  "firstResponseAverage": "Average time to first acknowledgement",
+  "responseSampleCount": "Acknowledgement average uses {count} calls opened in this period with a known first acknowledgement time.",
+  "@responseSampleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportMethodHelp": "Downtime sums reported intervals within the selected dates; ongoing stops count up to now. Machines are summed separately, so this is not total factory shutdown time. Dates use the device time zone.",
+  "reportIncomplete": "{count} legacy calls overlapping this period may have incomplete downtime history. Only known intervals are included; the total may understate production loss.",
+  "@reportIncomplete": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "machineBreakdown": "By machine",
+  "noPeriodData": "No records for this period.",
+  "reportUpdated": "Calculated at",
+  "handoverTeamOnly": "A worker from the target team or a supervisor can receive this handover.",
+  "trainingMode": "FIELD TEST",
+  "trainingBanner": "You are practicing with sample machines. Use the factory’s existing communication process for real faults.",
+  "trainingStepsTitle": "Two-device test steps",
+  "trainingSteps": "1. Keep the app open on both devices.\n2. With the monitoring account, create a sample call for TEST-1.\n3. With the operator account, find, claim and start work on the call.\n4. Report that production resumed, then resolve the call with a note.\n5. Check history and reports on both devices.\n6. Record missing calls and any difficult steps.\n\nBackground notifications require server setup and a separate device test.",
+  "incomingCall": "New call: {machine}",
+  "incomingCallCount": "{count} new calls received",
+  "incomingCallHelp": "Open the call to check the details.",
+  "soundTest": "Test notification sound",
+  "soundTestBody": "This is a test notification.",
+  "soundTestSent": "Test notification sent. If you heard no sound, check notification volume, the Factory Check notification channel and Do Not Disturb.",
+  "soundTestDisabled": "Notifications are disabled or unsupported on this device. Allow Factory Check notifications in Android settings.",
+  "testFeedback": "Test feedback",
+  "feedbackHelp": "What was easy or difficult? Your feedback is saved in the test company with your name and role for review after the trial.",
+  "feedbackEase": "Ease of use",
+  "feedbackScale": "1 = very difficult · 5 = very easy",
+  "feedbackNotes": "A difficult step or your suggestion",
+  "feedbackRequired": "Please complete this field.",
+  "feedbackSend": "Save feedback",
+  "feedbackSaved": "Your feedback has been saved.",
+  "@incomingCall": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "@incomingCallCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quickReason": "Quick reason (optional)",
+  "quickReasonHelp": "Choose a reason or write a description. These are starter options for the trial; report production state separately.",
+  "reasonMachineStopped": "Machine stopped",
+  "reasonMaterialJam": "Product / material jam",
+  "reasonMachineAlarm": "Machine alarm",
+  "reasonShapeSize": "Shape / size issue",
+  "reasonBakingColour": "Baking / colour issue",
+  "reasonPackagingSeal": "Package not sealing",
+  "reasonMaterialEmpty": "Production material depleted",
+  "reasonPackagingEmpty": "Packaging material depleted",
+  "reasonOperatorHelp": "Operator support",
+  "reasonTechnicalCheck": "Technical check needed"
+}

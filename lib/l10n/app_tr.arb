@@ -1,0 +1,333 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Factory Check",
+  "machinesTitle": "Makineler",
+  "incidentsTitle": "Çağrılar",
+  "logout": "Çıkış",
+  "language": "Dil",
+  "languageSystem": "Sistem",
+  "languageTurkish": "Türkçe",
+  "languageEnglish": "İngilizce",
+  "languagePolish": "Lehçe",
+  "roleLabel": "rol: {role}",
+  "@roleLabel": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentReport": "Arıza bildir",
+  "incidentRepair": "Tamir bildir",
+  "machineStatus": "Makine durumu",
+  "selectedMachine": "Seçilen makine: {machine}",
+  "@selectedMachine": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "noActiveIncidentNote": "Not: Bu makinede aktif arıza yok.",
+  "send": "Gönder",
+  "cancel": "İptal",
+  "confirmSend": "Eminim, gönder",
+  "statusOpen": "Açık",
+  "statusInProgress": "İşlemde",
+  "statusResolved": "Çözüldü",
+  "statusStopRequired": "Durdurulmalı",
+  "statusNeedTechnician": "Teknisyen gerekli",
+  "categoryRed": "Kırmızı",
+  "categoryYellow": "Sarı",
+  "categoryBlue": "Mavi",
+  "categoryGreen": "Yeşil",
+  "loginWelcome": "Hoş geldin",
+  "loginSubtitle": "Devam etmek için giriş yap",
+  "companyIdLabel": "Company ID",
+  "pinLabel": "PIN",
+  "loginButton": "Giriş",
+  "loginMissingFields": "Hesap ve şifre alanlarını doldurun.",
+  "loginNoUserDoc": "users/'{uid}' kaydı yok. Firestore’a role ekle.",
+  "loginError": "Login hata: {code}",
+  "@loginError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "machinesEmpty": "Makine yok.",
+  "incidentsEmpty": "Henüz incident yok.",
+  "error": "Hata: {msg}",
+  "@error": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFormSubtitle": "Arıza bildirim formu",
+  "repairFormSubtitle": "Arıza tamir formu",
+  "errorCodeLabel": "Arıza kodu",
+  "categoryLabel": "Kategori",
+  "choose": "Seç",
+  "pickDateTime": "Tarih/saat seç",
+  "reportedByLabel": "Arızayı kim belirtti (isim)",
+  "writeName": "İsim yaz",
+  "machineCanRun": "Makine hala çalışabilir mi?",
+  "descriptionLabel": "Açıklama (sorun / belirtiler)",
+  "redDescMin15": "Kırmızı için açıklama min 15 karakter",
+  "photoOptional": "Foto (opsiyonel)",
+  "camera": "Kamera",
+  "gallery": "Galeri",
+  "noPhotosYet": "Henüz foto eklenmedi.",
+  "photosUploading": "Fotoğraflar yükleniyor...",
+  "summaryTitle": "Özet",
+  "summaryMachine": "Makine",
+  "summaryErrorCode": "Arıza kodu",
+  "summaryCategory": "Kategori",
+  "summaryDateTime": "Tarih/saat",
+  "summaryReportedBy": "Bildiren",
+  "summaryCanRun": "Çalışabilir",
+  "summaryPhotos": "Foto",
+  "yes": "evet",
+  "no": "hayır",
+  "mustConfirmBeforeSend": "Göndermeden önce onay ver.",
+  "alreadyHasActiveIncident": "Bu makinede zaten aktif arıza var: {id}",
+  "@alreadyHasActiveIncident": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentCreatedButNoId": "Incident oluşturuldu ama id gelmedi (garip).",
+  "faultReported": "Arıza bildirildi.",
+  "faultAndPhotosUploaded": "Arıza + foto(lar) yüklendi.",
+  "submitError": "Gönderim hatası: {msg}",
+  "@submitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairNoActiveIncidentInfo": "Bu makinede aktif incident yok. Yine de “tamir bildir” notu gönderebilirsin.",
+  "repairActiveFaultTitle": "Aktif Arıza",
+  "repairSubmitted": "Tamir bildirildi (resolved).",
+  "repairSubmitError": "Tamir gönderim hatası: {msg}",
+  "@repairSubmitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairedByLabel": "Tamiri kim yaptı (isim)",
+  "machineRunsAfterLabel": "Makine çalışır durumda mı?",
+  "needsTeamLabel": "Ek ekip / teknisyen gerekiyor mu?",
+  "repairNotesLabel": "Açıklama (ne yapıldı / durum)",
+  "activeFaultDetailTitle": "Çağrı detayı",
+  "overview": "Genel bakış",
+  "calls": "Çağrılar",
+  "history": "Geçmiş",
+  "all": "Tümü",
+  "mine": "Üstlendiğim",
+  "searchMachines": "Makine veya bölüm ara",
+  "activeCalls": "Aktif çağrı",
+  "stoppedMachines": "Duruş bildirilen",
+  "waitingCalls": "Destek bekleyen",
+  "unassigned": "Henüz üstlenilmedi",
+  "assignedTo": "Sorumlu",
+  "team": "İlgili ekip",
+  "kind": "Çağrı türü",
+  "newCall": "Çağrı oluştur",
+  "claim": "Gördüm, üstlen",
+  "startWork": "Müdahaleye başla",
+  "waitForSupport": "Destek bekle",
+  "resumeWork": "Müdahaleye devam et",
+  "resolveCall": "Sonuçlandır",
+  "statusAcknowledged": "Üstlenildi",
+  "statusWaiting": "Destek bekleniyor",
+  "teamOperator": "Operatör",
+  "teamMaintenance": "Bakım",
+  "teamQuality": "Kalite",
+  "teamWarehouse": "Depo / malzeme",
+  "kindFault": "Arıza",
+  "kindQuality": "Kalite sorunu",
+  "kindMaterial": "Malzeme ihtiyacı",
+  "kindSupport": "Destek çağrısı",
+  "productionStopped": "Üretim durdu",
+  "productionRunning": "Üretim çalışıyor",
+  "stateUnknown": "Çalışma durumu doğrulanmadı",
+  "productionState": "Bildirilen üretim durumu",
+  "noActiveCalls": "Aktif çağrı yok",
+  "noResults": "Sonuç bulunamadı",
+  "noHistory": "Tamamlanan çağrı yok",
+  "addNote": "Not ekle",
+  "timeline": "İşlem geçmişi",
+  "noteHint": "Durum, bekleme nedeni veya vardiyaya aktarılacak bilgi",
+  "waitingReason": "Bekleme nedeni",
+  "resolutionNotes": "Ne yapıldı?",
+  "runningConfirmed": "Üretimin çalıştığını doğruluyorum",
+  "resolveHelp": "Üretim hâlâ duruyorsa veya ek destek gerekiyorsa çağrıyı beklemeye alın.",
+  "recordedAt": "Kayıt zamanı",
+  "downtime": "Bildirilen duruş",
+  "elapsed": "Geçen süre",
+  "minutes": "dk",
+  "existingCall": "Bu makinenin aktif çağrısı açıldı. Yeni bilgiyi not olarak ekleyebilirsiniz.",
+  "cachedData": "Önbellekteki veriler gösteriliyor. Güncel durum için bağlantıyı kontrol edin.",
+  "onlineRequired": "İşlem tamamlanamadı. Bağlantıyı kontrol edip tekrar deneyin.",
+  "saved": "Kaydedildi",
+  "retry": "Tekrar dene",
+  "photosPartial": "Çağrı kaydedildi fakat fotoğraflar yüklenemedi. Aşağıdan fotoğrafları tekrar gönderebilirsiniz.",
+  "retryPhotos": "Fotoğrafları tekrar gönder",
+  "openCall": "Çağrıyı aç",
+  "machineList": "Makine listesi",
+  "factoryMap": "Fabrika krokisi",
+  "callDescription": "Ne oldu, ne gerekiyor?",
+  "codeOptional": "Arıza kodu (varsa)",
+  "signInAccount": "E-posta veya şirket kodu",
+  "password": "Şifre / PIN",
+  "sessionError": "Hesap profili yüklenemedi. Bağlantıyı ve kullanıcı kaydını kontrol edin.",
+  "notificationUnavailable": "Telefon bildirimleri kurulamadı. Uygulama içindeki çağrı uyarıları ve canlı listeyi takip edebilirsiniz.",
+  "errorForbidden": "Bu işlem için yetkiniz yok.",
+  "errorAssigned": "Çağrıyı başka bir çalışan üstlenmiş.",
+  "errorStale": "Bu çağrı artık makinenin güncel çağrısı değil. Listeyi yenileyin.",
+  "errorTransition": "Çağrının durumu değişmiş. Güncel durumu kontrol edin.",
+  "errorTime": "Tarih/saat gelecekte veya başlangıçtan önce olamaz.",
+  "errorNote": "Lütfen kısa bir açıklama yazın.",
+  "errorRunning": "Sonuçlandırmak için üretimin çalıştığı doğrulanmalıdır.",
+  "notFound": "Kayıt bulunamadı.",
+  "photoLimit": "En fazla 5 fotoğraf ekleyebilirsiniz.",
+  "handover": "Vardiya devri",
+  "handoverHelp": "Vardiya notlarını ve açık işleri kayıt altına alın. Gelen vardiya teslim aldığını onaylasın.",
+  "productionResume": "Üretim yeniden başladı",
+  "productionStop": "Duruş bildir",
+  "confirmState": "Makinenin bildirilen üretim durumunu değiştirmek istediğinizi doğrulayın.",
+  "reportSummary": "Çağrı özeti",
+  "roleViewer": "Görüntüleyici",
+  "roleSupervisor": "Vardiya sorumlusu",
+  "roleWatcher": "İzleme ekibi",
+  "roleAdmin": "Yönetici",
+  "noActivity": "Henüz işlem yok",
+  "createdEvent": "Çağrı açıldı",
+  "photoEvent": "Fotoğraf eklendi",
+  "noteEvent": "Not eklendi",
+  "changedEvent": "Durum değişti",
+  "allTeams": "Tüm ekipler",
+  "newHandover": "Vardiya devri oluştur",
+  "noHandovers": "Henüz vardiya devri yok.",
+  "handoverFrom": "Devreden",
+  "handoverReceived": "Teslim alındı",
+  "handoverPending": "Teslim alınmayı bekliyor",
+  "loadMore": "Daha fazla göster",
+  "newHandoverHelp": "Vardiyayı tanımlayın, sonraki ekibin bilmesi gerekenleri yazın ve devredilecek çağrıları seçin.",
+  "shiftLabel": "Vardiya adı / saatleri",
+  "shiftHint": "Örn. 11 Ekim · Gece 22:00–06:00",
+  "handoverNotes": "Vardiya notları",
+  "handoverNotesHint": "Bekleyen malzeme, kontrol edilecek makine, önemli uyarılar…",
+  "selectHandoverCalls": "Devredilecek çağrılar ({count}/6)",
+  "@selectHandoverCalls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSelectionHelp": "En fazla 6 açık çağrı seçilebilir. Çağrı seçmeden de vardiya notu bırakabilirsiniz.",
+  "saveHandover": "Devri kaydet",
+  "acceptHandover": "Vardiyayı teslim al",
+  "handoverAcceptHelp": "Bu devri teslim aldığınız kaydedilecek. Seçili çağrılardan hâlâ devreden kişiye atanmış ve açık olanlar size geçecek. Diğer kişilerin işleri değişmeyecek.",
+  "handoverReadReceiptHelp": "Bu vardiya notlarını teslim aldığınız kaydedilecek. İzleme rolünde çağrı sorumluları değişmez.",
+  "handoverTransferred": "Teslim alana devredilen açık çağrı: {count}",
+  "@handoverTransferred": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSnapshotHelp": "Aşağıdaki bilgiler devir anındaki kayıttır. Güncel durumu görmek için çağrıya dokunun.",
+  "noHandoverCalls": "Bu devirde yalnızca vardiya notu var.",
+  "errorHandover": "Vardiya bilgilerini kontrol edin. En fazla 6 çağrı eklenebilir.",
+  "errorHandoverChanged": "Seçilen bir çağrı artık açık değil. Notlarınız korundu; güncel listeden çağrıları yeniden seçin.",
+  "errorHandoverAccepted": "Bu vardiya devrini başka bir kullanıcı teslim aldı.",
+  "errorHandoverSelf": "Devri başka bir çalışan teslim almalı.",
+  "handoverEvent": "Vardiya devriyle sorumlu değişti",
+  "reports": "Raporlar",
+  "reportIntro": "Tarih aralığı seçerek çağrıları ve bildirilen makine duruşlarını inceleyin.",
+  "today": "Bugün",
+  "lastSevenDays": "Son 7 gün",
+  "lastThirtyDays": "Son 30 gün",
+  "callsOpenedInPeriod": "Açılan çağrılar",
+  "callsResolvedInPeriod": "Kapatılan çağrılar",
+  "machineDowntimeTotal": "Toplam makine duruşu",
+  "firstResponseAverage": "Ortalama ilk üstlenme süresi",
+  "responseSampleCount": "Üstlenme ortalaması, bu dönemde açılan ve ilk üstlenme zamanı bilinen {count} çağrıdan hesaplanır.",
+  "@responseSampleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportMethodHelp": "Duruş, yalnızca seçilen tarih aralığına düşen bildirilmiş sürelerin toplamıdır; açık duruşlar şu ana kadar sayılır. Makineler ayrı ayrı toplanır; bu değer fabrikanın toplam kapalı kalma süresi değildir. Tarihler cihazın yerel saatine göredir.",
+  "reportIncomplete": "Bu döneme denk gelen {count} eski çağrının duruş geçmişi eksik olabilir. Yalnızca zamanı bilinen aralıklar toplama katıldı; bu toplam tam üretim kaybını göstermeyebilir.",
+  "@reportIncomplete": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "machineBreakdown": "Makine bazında",
+  "noPeriodData": "Seçilen dönemde kayıt bulunamadı.",
+  "reportUpdated": "Hesaplama zamanı",
+  "handoverTeamOnly": "Bu devri hedef ekipten bir çalışan veya vardiya sorumlusu teslim alabilir.",
+  "trainingMode": "SAHA TESTİ",
+  "trainingBanner": "Örnek makinelerle deneme yapıyorsunuz. Gerçek bir arıza için fabrikanın mevcut iletişim yolunu kullanın.",
+  "trainingStepsTitle": "İki cihazla test adımları",
+  "trainingSteps": "1. İki cihazda da uygulamayı açık tutun.\n2. İzleme hesabıyla TEST-1 makinesinde örnek çağrı açın.\n3. Operatör hesabıyla çağrıyı görün, üstlenin ve müdahaleyi başlatın.\n4. Üretim yeniden başladı seçeneğini deneyin; ardından notla çağrıyı kapatın.\n5. İki cihazdan geçmişi ve raporu kontrol edin.\n6. Görünmeyen çağrıları veya zorlandığınız adımları not edin.\n\nArka plan bildirimleri için sunucu kurulumu ve ayrıca cihaz testi gerekir.",
+  "incomingCall": "Yeni çağrı: {machine}",
+  "incomingCallCount": "{count} yeni çağrı geldi",
+  "incomingCallHelp": "Çağrıyı açıp ayrıntıları kontrol edin.",
+  "soundTest": "Bildirim sesi dene",
+  "soundTestBody": "Bu bir deneme bildirimidir.",
+  "soundTestSent": "Deneme bildirimi gönderildi. Ses duymadıysanız telefonun bildirim sesi, Factory Check bildirim kanalı ve Rahatsız Etmeyin ayarını kontrol edin.",
+  "soundTestDisabled": "Bildirim izni kapalı veya bu cihazda desteklenmiyor. Android ayarlarında Factory Check bildirimlerine izin verin.",
+  "testFeedback": "Test geri bildirimi",
+  "feedbackHelp": "Neyi kolay, neyi zor buldunuz? Yorumunuz test şirketinde adınız ve rolünüzle kaydedilir; deneme sonrası geliştirmeler için incelenebilir.",
+  "feedbackEase": "Kullanım kolaylığı",
+  "feedbackScale": "1 = çok zor · 5 = çok kolay",
+  "feedbackNotes": "Zorlandığınız adım veya öneriniz",
+  "feedbackRequired": "Lütfen bu alanı doldurun.",
+  "feedbackSend": "Geri bildirimi kaydet",
+  "feedbackSaved": "Geri bildiriminiz kaydedildi.",
+  "@incomingCall": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "@incomingCallCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quickReason": "Hazır neden (isteğe bağlı)",
+  "quickReasonHelp": "Uygun olanı seçin veya açıklama yazın. Bunlar deneme için başlangıç seçenekleridir; üretim durumunu ayrıca belirtin.",
+  "reasonMachineStopped": "Makine durdu",
+  "reasonMaterialJam": "Ürün / malzeme sıkıştı",
+  "reasonMachineAlarm": "Makine alarm veriyor",
+  "reasonShapeSize": "Şekil / ölçü uygunsuz",
+  "reasonBakingColour": "Pişirme / renk uygunsuz",
+  "reasonPackagingSeal": "Paket kapanmıyor",
+  "reasonMaterialEmpty": "Üretim malzemesi bitti",
+  "reasonPackagingEmpty": "Ambalaj malzemesi bitti",
+  "reasonOperatorHelp": "Operatör desteği",
+  "reasonTechnicalCheck": "Teknik kontrol gerekiyor"
+}

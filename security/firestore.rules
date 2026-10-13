@@ -1,0 +1,251 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function profile() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function company() { return profile().companyId; }
+    function role() { return profile().get('role', 'viewer'); }
+    function environment() { return profile().get('environment', 'production'); }
+    function member(id) { return signedIn() && company() == id; }
+    function reporter() { return role() in ['watcher', 'operator', 'maintenance', 'technician', 'quality', 'warehouse', 'admin', 'supervisor']; }
+    function manager() { return reporter() && role() != 'watcher'; }
+    function supervisor() { return role() in ['admin', 'supervisor']; }
+    function teamMember(team) { return supervisor() || role() == team || (role() == 'technician' && team == 'maintenance'); }
+    function text(value, max) { return value is string && value.size() > 0 && value.size() <= max; }
+    function scoped(data) { return member(data.createdByCompanyId); }
+    function active(data) { return data.status in ['open', 'acknowledged', 'in_progress', 'waiting', 'stop_required', 'need_technician']; }
+    function owns(data) { return supervisor() || data.get('assignedToUid', null) in [null, '', request.auth.uid]; }
+    function incident(id) { return get(/databases/$(database)/documents/incidents/$(id)).data; }
+    function incidentAfter(id) { return getAfter(/databases/$(database)/documents/incidents/$(id)).data; }
+    function actor(data, uidKey, roleKey, nameKey) {
+      return data[uidKey] == request.auth.uid && data[roleKey] == role()
+        && data[nameKey] == profile().displayName;
+    }
+    function machineMatches(id, data) {
+      let m = getAfter(/databases/$(database)/documents/machines/$(data.machineId)).data;
+      return member(m.companyId)
+        && (data.status == 'resolved'
+          ? m.get('activeIncidentId', null) == null && m.activeStatus == 'resolved'
+          : m.activeIncidentId == id && m.activeStatus == data.status)
+        && m.reportedState == (data.canRun ? 'running' : 'stopped');
+    }
+    function allowedTransition(before, after) {
+      return (before == 'open' && after == 'acknowledged')
+        || (before == 'acknowledged' && after in ['in_progress', 'waiting'])
+        || (before == 'in_progress' && after in ['waiting', 'resolved'])
+        || (before in ['waiting', 'stop_required', 'need_technician'] && after == 'in_progress');
+    }
+    function assignment(before, after) {
+      return after.get('assignedToUid', null) == before.get('assignedToUid', null)
+        || after.assignedToUid == request.auth.uid
+        || (after.status == 'waiting' && after.assignedToUid == null);
+    }
+    function transfer(id, before, after) {
+      let h = getAfter(/databases/$(database)/documents/companies/$(company())/handovers/$(after.lastHandoverId)).data;
+      return manager() && active(before)
+        && after.diff(before).affectedKeys().hasOnly(['assignedToUid', 'assignedToName', 'updatedAt', 'lastHandoverId'])
+        && after.assignedToUid == request.auth.uid && after.assignedToName == profile().displayName
+        && h.status == 'accepted' && h.acceptedAt == request.time && h.acceptedByUid == request.auth.uid
+        && h.createdByUid == before.assignedToUid && id in h.incidentIds && teamMember(h.team);
+    }
+    function validResolution(data) {
+      return data.status != 'resolved' || (data.canRun == true
+        && data.machineRunsAfter == true && data.needsTeam == false
+        && text(data.repairNotes, 4000) && actor(data, 'repairedByUid', 'repairedByRole', 'repairedByName')
+        && data.repairedAt == data.resolvedAt
+        && data.resolvedAt is timestamp && data.resolvedAt <= request.time + duration.value(1, 'm')
+        && data.resolvedAt >= data.get('openedAt', data.createdAt));
+    }
+    function validReason(data) {
+      let code = data.get('reasonCode', null);
+      return code == null
+        || (data.kind == 'fault' && code in ['machine_stopped', 'material_jam', 'machine_alarm'])
+        || (data.kind == 'quality' && code in ['shape_size', 'baking_colour', 'packaging_seal'])
+        || (data.kind == 'material' && code in ['material_empty', 'packaging_empty'])
+        || (data.kind == 'support' && code in ['operator_help', 'technical_check']);
+    }
+    match /users/{uid} {
+      allow get: if signedIn() && uid == request.auth.uid;
+      allow list, write: if false;
+    }
+    match /machines/{id} {
+      allow read: if member(resource.data.companyId);
+      allow update: if member(resource.data.companyId) && reporter()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'activeIncidentId', 'activeStatus', 'activeCategory', 'activeOpenedAt', 'reportedState', 'updatedAt'
+        ]) && request.resource.data.updatedAt == request.time
+        && machineUpdate(id, resource.data, request.resource.data);
+      function machineUpdate(id, before, after) {
+        let callId = after.get('activeIncidentId', before.get('activeIncidentId', ''));
+        let c = incidentAfter(callId);
+        return scoped(c) && c.machineId == id && c.updatedAt == request.time
+          && (before.get('activeIncidentId', '') == callId || c.createdAt == request.time)
+          && after.activeStatus == c.status
+          && after.reportedState == (c.canRun ? 'running' : 'stopped')
+          && after.activeCategory == (c.status == 'resolved' ? 'green' : c.category)
+          && (c.status == 'resolved' ? after.get('activeIncidentId', null) == null : after.activeIncidentId == callId);
+      }
+    }
+    match /incidents/{id} {
+      allow read: if scoped(resource.data);
+      allow create: if scoped(request.resource.data) && reporter()
+        && request.resource.data.environment == environment()
+        && actor(request.resource.data, 'createdByUid', 'reportedByRole', 'reportedByName')
+        && request.resource.data.status == 'open'
+        && request.resource.data.assignedToUid == null && request.resource.data.assignedToName == null
+        && request.resource.data.ackAt == null && request.resource.data.resolvedAt == null
+        && request.resource.data.downtimeSeconds == 0
+        && request.resource.data.createdAt == request.time && request.resource.data.updatedAt == request.time
+        && text(request.resource.data.description, 1500)
+        && request.resource.data.kind in ['fault', 'quality', 'material', 'support']
+        && request.resource.data.targetTeam in ['operator', 'maintenance', 'quality', 'warehouse']
+        && validReason(request.resource.data)
+        && request.resource.data.canRun is bool
+        && request.resource.data.openedAt is timestamp
+        && request.resource.data.openedAt <= request.time + duration.value(1, 'm')
+        && freeMachine(request.resource.data.machineId)
+        && machineMatches(id, request.resource.data);
+      function freeMachine(id) {
+        let m = get(/databases/$(database)/documents/machines/$(id)).data;
+        return member(m.companyId) && m.get('environment', 'production') == environment()
+          && (m.get('activeIncidentId', '') == '' || m.get('activeIncidentId', null) == null
+            || incident(m.activeIncidentId).status == 'resolved');
+      }
+      allow update: if scoped(resource.data) && reporter()
+        && request.resource.data.updatedAt == request.time
+        && (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt'])
+          || (request.resource.data.diff(resource.data).affectedKeys().hasAny(['lastHandoverId'])
+            && transfer(id, resource.data, request.resource.data))
+          || workflowUpdate(id, resource.data, request.resource.data));
+      function workflowUpdate(id, before, after) {
+        return manager() && owns(before) && active(before)
+          && after.diff(before).affectedKeys().hasOnly([
+            'status', 'updatedAt', 'assignedToUid', 'assignedToName', 'ackAt', 'workStartedAt',
+            'waitingReason', 'targetTeam', 'resolvedAt', 'repairedAt', 'repairedByUid',
+            'repairedByName', 'repairedByRole', 'repairNotes', 'machineRunsAfter', 'canRun',
+            'needsTeam', 'downtimeStartedAt', 'downtimeEndedAt', 'downtimeSeconds', 'activeDowntimeId', 'category'
+          ]) && mutationFields(before, after)
+          && assignment(before, after)
+          && (after.get('assignedToUid', null) != before.get('assignedToUid', null)
+            || after.get('assignedToName', null) == before.get('assignedToName', null))
+          && (after.get('assignedToUid', null) == before.get('assignedToUid', null)
+            || after.get('assignedToUid', null) == null || after.assignedToName == profile().displayName)
+          && (after.status != 'waiting' || text(after.waitingReason, 4000))
+          && after.get('targetTeam', 'maintenance') in ['operator', 'maintenance', 'quality', 'warehouse']
+          && (after.get('targetTeam', 'maintenance') == before.get('targetTeam', 'maintenance') || after.status == 'waiting')
+          && after.canRun is bool && validResolution(after)
+          && machineMatches(id, after);
+      }
+      function mutationFields(before, after) {
+        let changes = after.diff(before).affectedKeys();
+        return (after.status == before.status && after.canRun != before.canRun
+          && changes.hasOnly(['updatedAt', 'canRun', 'category', 'downtimeStartedAt',
+            'downtimeEndedAt', 'downtimeSeconds', 'activeDowntimeId']))
+          || (allowedTransition(before.status, after.status)
+            && (after.status == 'resolved' || changes.hasOnly([
+              'status', 'updatedAt', 'assignedToUid', 'assignedToName', 'ackAt',
+              'workStartedAt', 'waitingReason', 'targetTeam'
+            ]))
+            && (after.status != 'acknowledged' || after.assignedToUid == request.auth.uid)
+            && (after.get('ackAt', null) == before.get('ackAt', null)
+              || (before.get('ackAt', null) == null && after.ackAt == request.time))
+            && (after.get('workStartedAt', null) == before.get('workStartedAt', null)
+              || (before.get('workStartedAt', null) == null && after.status == 'in_progress'
+                && after.workStartedAt == request.time)));
+      }
+      match /events/{eventId} {
+        allow read: if scoped(incident(id));
+        allow create: if reporter() && scoped(incidentAfter(id))
+          && actor(request.resource.data, 'byUid', 'byRole', 'byName')
+          && request.resource.data.at == request.time && request.resource.data.message is string
+          && request.resource.data.message.size() <= 4000
+          && incidentAfter(id).updatedAt == request.time
+          && validEvent(id, request.resource.data);
+        function validEvent(id, data) {
+          let after = incidentAfter(id);
+          return (data.type == 'created' && after.createdByUid == request.auth.uid && after.createdAt == request.time)
+            || (data.type == 'note_added' && text(data.message, 4000))
+            || data.type == 'photo_added'
+            || (manager() && (
+              (data.type == 'status_changed' && incident(id).status != after.status
+                && data.fromStatus == incident(id).status && data.toStatus == after.status)
+              || (data.type == 'production_stopped' && incident(id).canRun == true && after.canRun == false)
+              || (data.type == 'production_resumed' && incident(id).canRun == false && after.canRun == true)
+              || (data.type == 'handover_received' && incident(id).assignedToUid != after.assignedToUid
+                && after.assignedToUid == request.auth.uid && data.handoverId == after.lastHandoverId)
+            ));
+        }
+        // A photo upload retries the same deterministic event after a lost response.
+        allow update: if reporter() && scoped(incident(id)) && resource.data.type == 'photo_added'
+          && resource.data.byUid == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['at'])
+          && request.resource.data.at == request.time;
+      }
+      match /photos/{photoId} {
+        allow read: if scoped(incident(id));
+        allow create: if reporter() && scoped(incident(id))
+          && actor(request.resource.data, 'byUid', 'byRole', 'byName')
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.path.matches('incidents/' + id + '/' + photoId + '[.](jpg|png|heic)')
+          && request.resource.data.url is string;
+        allow update: if reporter() && scoped(incident(id)) && resource.data.byUid == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['url', 'createdAt'])
+          && request.resource.data.createdAt == request.time;
+      }
+    }
+    match /downtime_intervals/{id} {
+      allow read: if member(resource.data.companyId);
+      allow create, update: if member(request.resource.data.companyId)
+        && reporter() && validInterval(id, request.resource.data)
+        && (resource == null || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['endAt'])) ;
+      function validInterval(id, data) {
+        let c = incidentAfter(data.incidentId);
+        return scoped(c) && c.machineId == data.machineId && c.updatedAt == request.time
+          && data.startAt is timestamp && data.startAt <= request.time + duration.value(1, 'm')
+          && (data.endAt == null
+            ? c.activeDowntimeId == id && c.canRun == false && c.downtimeStartedAt == data.startAt
+            : manager() && data.endAt is timestamp && data.endAt >= data.startAt
+              && data.endAt <= request.time + duration.value(1, 'm') && c.canRun == true
+              && c.downtimeEndedAt == data.endAt && c.downtimeStartedAt == data.startAt
+              && incident(data.incidentId).get('downtimeEndedAt', null) == null
+              && (incident(data.incidentId).get('activeDowntimeId', '') == id
+                || incident(data.incidentId).get('schemaVersion', 0) < 3));
+      }
+    }
+    match /companies/{companyId} {
+      allow read: if member(companyId);
+      match /test_feedback/{id} {
+        allow read: if member(companyId);
+        allow create: if member(companyId) && reporter() && environment() == 'training'
+          && request.resource.data.companyId == companyId && request.resource.data.environment == 'training'
+          && actor(request.resource.data, 'createdByUid', 'createdByRole', 'createdByName')
+          && request.resource.data.createdAt == request.time && text(request.resource.data.notes, 2000)
+          && request.resource.data.ease is int && request.resource.data.ease >= 1 && request.resource.data.ease <= 5;
+      }
+      match /handovers/{id} {
+        allow read: if member(companyId);
+        allow create: if member(companyId) && reporter()
+          && request.resource.data.companyId == companyId && request.resource.data.environment == environment()
+          && actor(request.resource.data, 'createdByUid', 'createdByRole', 'createdByName')
+          && request.resource.data.createdAt == request.time && request.resource.data.status == 'pending'
+          && request.resource.data.acceptedByUid == null && request.resource.data.acceptedAt == null
+          && text(request.resource.data.shift, 80) && text(request.resource.data.notes, 2000)
+          && request.resource.data.team in ['watcher', 'operator', 'maintenance', 'quality', 'warehouse']
+          && request.resource.data.calls is list && request.resource.data.calls.size() <= 6
+          && request.resource.data.incidentIds is list
+          && request.resource.data.incidentIds.size() == request.resource.data.calls.size();
+        allow update: if member(companyId) && reporter() && teamMember(resource.data.team)
+          && resource.data.createdByUid != request.auth.uid && resource.data.status == 'pending'
+          && request.resource.data.status == 'accepted' && request.resource.data.acceptedAt == request.time
+          && request.resource.data.acceptedByUid == request.auth.uid
+          && request.resource.data.acceptedByName == profile().displayName
+          && request.resource.data.transferredCalls is int && request.resource.data.transferredCalls >= 0
+          && request.resource.data.transferredCalls <= resource.data.calls.size()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'status', 'acceptedByUid', 'acceptedByName', 'acceptedAt', 'transferredCalls'
+          ]);
+      }
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

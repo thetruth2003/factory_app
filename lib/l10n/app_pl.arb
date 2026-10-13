@@ -1,0 +1,333 @@
+{
+  "@@locale": "pl",
+  "appTitle": "Factory Check",
+  "machinesTitle": "Maszyny",
+  "incidentsTitle": "Zgłoszenia",
+  "logout": "Wyloguj",
+  "language": "Język",
+  "languageSystem": "System",
+  "languageTurkish": "Turecki",
+  "languageEnglish": "Angielski",
+  "languagePolish": "Polski",
+  "roleLabel": "rola: {role}",
+  "@roleLabel": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentReport": "Zgłoś awarię",
+  "incidentRepair": "Zgłoś naprawę",
+  "machineStatus": "Status maszyny",
+  "selectedMachine": "Wybrana maszyna: {machine}",
+  "@selectedMachine": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "noActiveIncidentNote": "Uwaga: Ta maszyna nie ma aktywnego incydentu.",
+  "send": "Wyślij",
+  "cancel": "Anuluj",
+  "confirmSend": "Tak, wyślij",
+  "statusOpen": "Otwarte",
+  "statusInProgress": "W toku",
+  "statusResolved": "Rozwiązane",
+  "statusStopRequired": "Wymagane zatrzymanie",
+  "statusNeedTechnician": "Potrzebny technik",
+  "categoryRed": "Czerwony",
+  "categoryYellow": "Żółty",
+  "categoryBlue": "Niebieski",
+  "categoryGreen": "Zielony",
+  "loginWelcome": "Witamy",
+  "loginSubtitle": "Zaloguj się, aby kontynuować",
+  "companyIdLabel": "Company ID",
+  "pinLabel": "PIN",
+  "loginButton": "Zaloguj",
+  "loginMissingFields": "Wpisz konto i hasło.",
+  "loginNoUserDoc": "Brak rekordu w users/'{uid}'. Dodaj rolę w Firestore.",
+  "loginError": "Błąd logowania: {code}",
+  "@loginError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "machinesEmpty": "Brak maszyn.",
+  "incidentsEmpty": "Brak incydentów.",
+  "error": "Błąd: {msg}",
+  "@error": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "reportFormSubtitle": "Formularz zgłoszenia awarii",
+  "repairFormSubtitle": "Formularz zgłoszenia naprawy",
+  "errorCodeLabel": "Kod awarii",
+  "categoryLabel": "Kategoria",
+  "choose": "Wybierz",
+  "pickDateTime": "Wybierz datę/godzinę",
+  "reportedByLabel": "Kto zgłosił (imię)",
+  "writeName": "Wpisz imię",
+  "machineCanRun": "Czy maszyna może dalej pracować?",
+  "descriptionLabel": "Opis (problem / objawy)",
+  "redDescMin15": "Dla Czerwonego opis min. 15 znaków",
+  "photoOptional": "Zdjęcie (opcjonalnie)",
+  "camera": "Aparat",
+  "gallery": "Galeria",
+  "noPhotosYet": "Nie dodano jeszcze zdjęć.",
+  "photosUploading": "Trwa wysyłanie zdjęć...",
+  "summaryTitle": "Podsumowanie",
+  "summaryMachine": "Maszyna",
+  "summaryErrorCode": "Kod awarii",
+  "summaryCategory": "Kategoria",
+  "summaryDateTime": "Data/godzina",
+  "summaryReportedBy": "Zgłaszający",
+  "summaryCanRun": "Może pracować",
+  "summaryPhotos": "Zdjęcia",
+  "yes": "tak",
+  "no": "nie",
+  "mustConfirmBeforeSend": "Potwierdź przed wysłaniem.",
+  "alreadyHasActiveIncident": "Ta maszyna ma już aktywny incydent: {id}",
+  "@alreadyHasActiveIncident": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "incidentCreatedButNoId": "Incydent utworzony, ale nie zwrócono id (dziwne).",
+  "faultReported": "Awaria zgłoszona.",
+  "faultAndPhotosUploaded": "Awaria + zdjęcie(a) wysłane.",
+  "submitError": "Błąd wysyłania: {msg}",
+  "@submitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairNoActiveIncidentInfo": "Brak aktywnego incydentu dla tej maszyny. Nadal możesz wysłać notatkę naprawy.",
+  "repairActiveFaultTitle": "Aktywna awaria",
+  "repairSubmitted": "Naprawa zgłoszona (resolved).",
+  "repairSubmitError": "Błąd wysyłania naprawy: {msg}",
+  "@repairSubmitError": {
+    "placeholders": {
+      "msg": {
+        "type": "String"
+      }
+    }
+  },
+  "repairedByLabel": "Kto naprawił (imię)",
+  "machineRunsAfterLabel": "Czy maszyna działa?",
+  "needsTeamLabel": "Czy potrzebny dodatkowy zespół/technik?",
+  "repairNotesLabel": "Opis (co zrobiono / stan)",
+  "activeFaultDetailTitle": "Szczegóły zgłoszenia",
+  "overview": "Przegląd",
+  "calls": "Zgłoszenia",
+  "history": "Historia",
+  "all": "Wszystkie",
+  "mine": "Przypisane do mnie",
+  "searchMachines": "Szukaj maszyny lub sekcji",
+  "activeCalls": "Aktywne zgłoszenia",
+  "stoppedMachines": "Zgłoszone przestoje",
+  "waitingCalls": "Oczekujące na wsparcie",
+  "unassigned": "Jeszcze nieprzypisane",
+  "assignedTo": "Osoba odpowiedzialna",
+  "team": "Odpowiedzialny zespół",
+  "kind": "Typ zgłoszenia",
+  "newCall": "Nowe zgłoszenie",
+  "claim": "Potwierdź i przejmij",
+  "startWork": "Rozpocznij pracę",
+  "waitForSupport": "Oczekiwanie na wsparcie",
+  "resumeWork": "Wznów pracę",
+  "resolveCall": "Zakończ zgłoszenie",
+  "statusAcknowledged": "Przyjęte",
+  "statusWaiting": "Oczekiwanie na wsparcie",
+  "teamOperator": "Operator",
+  "teamMaintenance": "Utrzymanie ruchu",
+  "teamQuality": "Jakość",
+  "teamWarehouse": "Magazyn / materiały",
+  "kindFault": "Awaria",
+  "kindQuality": "Problem jakościowy",
+  "kindMaterial": "Zapotrzebowanie na materiał",
+  "kindSupport": "Prośba o wsparcie",
+  "productionStopped": "Produkcja zatrzymana",
+  "productionRunning": "Produkcja działa",
+  "stateUnknown": "Stan pracy niepotwierdzony",
+  "productionState": "Zgłoszony stan produkcji",
+  "noActiveCalls": "Brak aktywnych zgłoszeń",
+  "noResults": "Brak wyników",
+  "noHistory": "Brak zakończonych zgłoszeń",
+  "addNote": "Dodaj notatkę",
+  "timeline": "Historia działań",
+  "noteHint": "Status, powód oczekiwania lub informacja dla kolejnej zmiany",
+  "waitingReason": "Powód oczekiwania",
+  "resolutionNotes": "Co zostało zrobione?",
+  "runningConfirmed": "Potwierdzam, że produkcja działa",
+  "resolveHelp": "Ustaw oczekiwanie, jeśli produkcja nadal stoi lub potrzebne jest wsparcie.",
+  "recordedAt": "Czas zgłoszenia",
+  "downtime": "Zgłoszony przestój",
+  "elapsed": "Czas od zgłoszenia",
+  "minutes": "min",
+  "existingCall": "Otwarto istniejące zgłoszenie. Nowe informacje dodaj jako notatkę.",
+  "cachedData": "Wyświetlane są dane z pamięci. Sprawdź połączenie, aby zobaczyć aktualny stan.",
+  "onlineRequired": "Nie udało się wykonać operacji. Sprawdź połączenie i spróbuj ponownie.",
+  "saved": "Zapisano",
+  "retry": "Spróbuj ponownie",
+  "photosPartial": "Zgłoszenie zapisano, ale zdjęć nie wysłano. Spróbuj wysłać je ponownie poniżej.",
+  "retryPhotos": "Wyślij zdjęcia ponownie",
+  "openCall": "Otwórz zgłoszenie",
+  "machineList": "Lista maszyn",
+  "factoryMap": "Plan zakładu",
+  "callDescription": "Co się stało lub czego potrzeba?",
+  "codeOptional": "Kod awarii (opcjonalny)",
+  "signInAccount": "E-mail lub kod firmy",
+  "password": "Hasło / PIN",
+  "sessionError": "Nie udało się wczytać profilu konta. Sprawdź połączenie i dane użytkownika.",
+  "notificationUnavailable": "Nie udało się skonfigurować powiadomień telefonu. Możesz śledzić alerty w aplikacji i listę zgłoszeń na żywo.",
+  "errorForbidden": "Brak uprawnień do tej operacji.",
+  "errorAssigned": "Zgłoszenie przejął inny pracownik.",
+  "errorStale": "To zgłoszenie nie jest już aktualne dla tej maszyny. Odśwież listę.",
+  "errorTransition": "Status zgłoszenia się zmienił. Sprawdź aktualny stan.",
+  "errorTime": "Czas nie może być w przyszłości ani przed początkiem.",
+  "errorNote": "Wpisz krótki opis.",
+  "errorRunning": "Przed zakończeniem należy potwierdzić pracę produkcji.",
+  "notFound": "Nie znaleziono rekordu.",
+  "photoLimit": "Możesz dodać maksymalnie 5 zdjęć.",
+  "handover": "Przekazanie zmiany",
+  "handoverHelp": "Zapisz notatki i otwarte zgłoszenia, aby kolejna zmiana mogła potwierdzić odbiór.",
+  "productionResume": "Produkcja wznowiona",
+  "productionStop": "Zgłoś przestój",
+  "confirmState": "Potwierdź zmianę zgłoszonego stanu produkcji.",
+  "reportSummary": "Podsumowanie zgłoszeń",
+  "roleViewer": "Obserwator",
+  "roleSupervisor": "Kierownik zmiany",
+  "roleWatcher": "Zespół monitorujący",
+  "roleAdmin": "Administrator",
+  "noActivity": "Brak działań",
+  "createdEvent": "Utworzono zgłoszenie",
+  "photoEvent": "Dodano zdjęcie",
+  "noteEvent": "Dodano notatkę",
+  "changedEvent": "Zmieniono status",
+  "allTeams": "Wszystkie zespoły",
+  "newHandover": "Utwórz przekazanie",
+  "noHandovers": "Brak przekazań zmiany.",
+  "handoverFrom": "Przekazuje",
+  "handoverReceived": "Odebrano",
+  "handoverPending": "Oczekuje na odbiór",
+  "loadMore": "Pokaż więcej",
+  "newHandoverHelp": "Nazwij zmianę, zapisz informacje dla kolejnego zespołu i wybierz zgłoszenia do przekazania.",
+  "shiftLabel": "Nazwa / godziny zmiany",
+  "shiftHint": "Np. 11 października · Noc 22:00–06:00",
+  "handoverNotes": "Notatki zmiany",
+  "handoverNotesHint": "Brakujące materiały, maszyny do sprawdzenia, ważne uwagi…",
+  "selectHandoverCalls": "Zgłoszenia do przekazania ({count}/6)",
+  "@selectHandoverCalls": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSelectionHelp": "Wybierz do 6 otwartych zgłoszeń. Możesz też zapisać same notatki zmiany.",
+  "saveHandover": "Zapisz przekazanie",
+  "acceptHandover": "Odbierz przekazanie",
+  "handoverAcceptHelp": "Odbiór zostanie zapisany. Wybrane otwarte zgłoszenia nadal przypisane do osoby przekazującej przejdą do Ciebie. Zgłoszenia innych osób pozostaną bez zmian.",
+  "handoverReadReceiptHelp": "Odbiór notatek zostanie zapisany. Rola monitoringu nie zmienia osób przypisanych do zgłoszeń.",
+  "handoverTransferred": "Otwarte zgłoszenia przekazane odbiorcy: {count}",
+  "@handoverTransferred": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "handoverSnapshotHelp": "Poniższe dane przedstawiają stan z chwili przekazania. Otwórz zgłoszenie, aby zobaczyć aktualny stan.",
+  "noHandoverCalls": "To przekazanie zawiera tylko notatki zmiany.",
+  "errorHandover": "Sprawdź dane zmiany. Można dodać maksymalnie 6 zgłoszeń.",
+  "errorHandoverChanged": "Wybrane zgłoszenie nie jest już otwarte. Notatki zachowano; wybierz zgłoszenia ponownie z aktualnej listy.",
+  "errorHandoverAccepted": "Inny użytkownik odebrał już to przekazanie.",
+  "errorHandoverSelf": "Przekazanie musi odebrać inny pracownik.",
+  "handoverEvent": "Zmiana osoby odpowiedzialnej przy przekazaniu zmiany",
+  "reports": "Raporty",
+  "reportIntro": "Sprawdź zgłoszenia i zgłoszone przestoje maszyn w wybranym okresie.",
+  "today": "Dzisiaj",
+  "lastSevenDays": "Ostatnie 7 dni",
+  "lastThirtyDays": "Ostatnie 30 dni",
+  "callsOpenedInPeriod": "Utworzone zgłoszenia",
+  "callsResolvedInPeriod": "Zamknięte zgłoszenia",
+  "machineDowntimeTotal": "Łączny przestój maszyn",
+  "firstResponseAverage": "Średni czas do pierwszego przyjęcia",
+  "responseSampleCount": "Średni czas przyjęcia obliczono dla {count} zgłoszeń utworzonych w tym okresie ze znanym czasem pierwszego przyjęcia.",
+  "@responseSampleCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportMethodHelp": "Przestój to suma zgłoszonych odcinków czasu w wybranym okresie; trwające przestoje liczone są do teraz. Maszyny sumuje się oddzielnie, więc nie jest to czas zatrzymania całej fabryki. Daty używają strefy czasowej urządzenia.",
+  "reportIncomplete": "{count} starszych zgłoszeń obejmujących ten okres może mieć niepełną historię przestojów. Uwzględniono tylko znane odcinki; suma może być zaniżona.",
+  "@reportIncomplete": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "machineBreakdown": "Według maszyny",
+  "noPeriodData": "Brak danych w wybranym okresie.",
+  "reportUpdated": "Obliczono",
+  "handoverTeamOnly": "Przekazanie może odebrać pracownik zespołu docelowego lub kierownik zmiany.",
+  "trainingMode": "TEST TERENOWY",
+  "trainingBanner": "Ćwiczysz na przykładowych maszynach. W przypadku rzeczywistej awarii użyj obecnego sposobu komunikacji w fabryce.",
+  "trainingStepsTitle": "Test na dwóch urządzeniach",
+  "trainingSteps": "1. Pozostaw aplikację otwartą na obu urządzeniach.\n2. Kontem monitoringu utwórz przykładowe zgłoszenie dla TEST-1.\n3. Kontem operatora znajdź zgłoszenie, przyjmij je i rozpocznij pracę.\n4. Zgłoś wznowienie produkcji, a potem zamknij zgłoszenie z notatką.\n5. Sprawdź historię i raporty na obu urządzeniach.\n6. Zapisz brakujące zgłoszenia i trudne kroki.\n\nPowiadomienia w tle wymagają konfiguracji serwera i oddzielnego testu urządzeń.",
+  "incomingCall": "Nowe zgłoszenie: {machine}",
+  "incomingCallCount": "Nowe zgłoszenia: {count}",
+  "incomingCallHelp": "Otwórz zgłoszenie, aby sprawdzić szczegóły.",
+  "soundTest": "Test dźwięku powiadomień",
+  "soundTestBody": "To jest powiadomienie testowe.",
+  "soundTestSent": "Wysłano powiadomienie testowe. Jeśli nie było dźwięku, sprawdź głośność powiadomień, kanał Factory Check i tryb Nie przeszkadzać.",
+  "soundTestDisabled": "Powiadomienia są wyłączone lub nieobsługiwane. Zezwól na powiadomienia Factory Check w ustawieniach Androida.",
+  "testFeedback": "Opinia o teście",
+  "feedbackHelp": "Co było łatwe, a co trudne? Opinia zostanie zapisana w firmie testowej wraz z Twoim imieniem i rolą do analizy po próbie.",
+  "feedbackEase": "Łatwość obsługi",
+  "feedbackScale": "1 = bardzo trudno · 5 = bardzo łatwo",
+  "feedbackNotes": "Trudny krok lub Twoja sugestia",
+  "feedbackRequired": "Uzupełnij to pole.",
+  "feedbackSend": "Zapisz opinię",
+  "feedbackSaved": "Twoja opinia została zapisana.",
+  "@incomingCall": {
+    "placeholders": {
+      "machine": {
+        "type": "String"
+      }
+    }
+  },
+  "@incomingCallCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quickReason": "Gotowy powód (opcjonalnie)",
+  "quickReasonHelp": "Wybierz powód lub wpisz opis. To początkowe opcje do testu; stan produkcji podaj osobno.",
+  "reasonMachineStopped": "Maszyna zatrzymana",
+  "reasonMaterialJam": "Zacięcie produktu / materiału",
+  "reasonMachineAlarm": "Alarm maszyny",
+  "reasonShapeSize": "Problem z kształtem / rozmiarem",
+  "reasonBakingColour": "Problem z wypiekiem / kolorem",
+  "reasonPackagingSeal": "Opakowanie się nie zamyka",
+  "reasonMaterialEmpty": "Brak materiału produkcyjnego",
+  "reasonPackagingEmpty": "Brak materiału opakowaniowego",
+  "reasonOperatorHelp": "Wsparcie operatora",
+  "reasonTechnicalCheck": "Potrzebna kontrola techniczna"
+}

@@ -1,0 +1,7 @@
+{
+  "companyId": "YOUR_COMPANY_ID",
+  "users": [
+    ["EXISTING_OPERATOR_AUTH_UID", "operator-login", "operator"],
+    ["EXISTING_WATCHER_AUTH_UID", "watcher-login", "watcher"]
+  ]
+}
