@@ -222,6 +222,9 @@ Testler şirket ayrımı, rol değiştirme yasağı, işlem geçişleri, sahipli
 olay kayıtları, altı çağrılık vardiya devri ve eski çağrılarla uyumluluğu kapsar.
 Son doğrulama: 73 Flutter testi, 24 güvenlik testi, temiz `flutter analyze` ve
 başarılı debug APK derlemesi.
+Android Pixel 7 emülatöründe gerçek Firebase SDK'sıyla plan → gün sonu raporu →
+önemli ekip notu → diğer operatörün okundu kaydı → admin kontrolü de geçti.
+Yerel Auth/Firestore ile tekrarlanabilir test: [integration_test/README.md](integration_test/README.md).
 
 Yönetim araçları `tool/` altındadır. `prepare_company_access.cjs` için
 `company_access.example.json` dosyasını `company_access.local.json` olarak

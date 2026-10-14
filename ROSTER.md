@@ -63,3 +63,8 @@ rapor `reports/end`; not `team_notes/{id}`; okundu `reads/{uid}`.
 Güvenlik testleri `security/firestore.test.cjs`, servis/ekran testleri
 `test/roster_test.dart`, yerel örnekli ekran görüntüleri
 `flutter test --update-goldens tool/capture_roster_test.dart` ile üretilir.
+
+Android üzerinde rol değiştirerek rapor/not/okundu akışı da doğrulandı.
+Gerçek Android Firebase SDK'sı ve yerel Auth/Firestore kullanan testin çalıştırılması:
+[integration_test/README.md](integration_test/README.md). Bu test canlı fabrika
+kayıtlarını kullanmaz; sonunda normal uygulama APK'sı tekrar kurulmalıdır.
