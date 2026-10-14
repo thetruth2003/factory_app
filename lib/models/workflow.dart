@@ -44,6 +44,7 @@ class FactoryUser {
     required String email,
     required Map<String, dynamic> profile,
   }) {
+    if (profile['isActive'] == false) throw const WorkflowException('forbidden');
     final explicitCompany = (profile['companyId'] ?? '').toString().trim();
     final legacyCompany = email.endsWith('@company.local')
         ? email.split('@').first

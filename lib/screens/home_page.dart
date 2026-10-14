@@ -12,6 +12,8 @@ import 'report_incident_page.dart';
 import 'handover_page.dart';
 import 'reports_page.dart';
 import 'test_feedback_page.dart';
+import 'roster_page.dart';
+import '../models/roster.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -29,7 +31,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late final FirebaseFirestore _db = widget.db ?? FirebaseFirestore.instance;
   late Stream<QuerySnapshot<Map<String, dynamic>>> _calls;
   late Stream<QuerySnapshot<Map<String, dynamic>>> _machines;
@@ -50,6 +52,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _subscribe();
     _timer = Timer.periodic(const Duration(minutes: 1), (_) {
       if (mounted) setState(() {});
@@ -184,7 +187,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && mounted) setState(() {});
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _callAlerts?.cancel();
     _timer?.cancel();
     super.dispose();
@@ -254,6 +263,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: SessionTitle(title: t.appTitle, actor: widget.actor),
         actions: [
+          IconButton(
+            tooltip: t.roster,
+            icon: const Icon(Icons.calendar_month_outlined),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => RosterPage(actor: widget.actor, db: _db),
+              ),
+            ),
+          ),
           IconButton(
             tooltip: t.reports,
             icon: const Icon(Icons.assessment_outlined),
@@ -359,6 +377,23 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(height: 16),
                         if (_page == 0) ...[
+                          TeamNotesPanel(
+                            actor: widget.actor,
+                            db: _db,
+                            day: FactoryCalendar.today(),
+                            compact: true,
+                          ),
+                          OutlinedButton.icon(
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    RosterPage(actor: widget.actor, db: _db),
+                              ),
+                            ),
+                            icon: const Icon(Icons.calendar_month_outlined),
+                            label: Text(t.roster),
+                          ),
+                          const SizedBox(height: 12),
                           if (widget.actor.isTraining) ...[
                             Card(
                               child: ExpansionTile(

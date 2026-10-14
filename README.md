@@ -1,4 +1,4 @@
-# Factory Check 1.2.3
+# Factory Check 1.3.0
 
 Android uygulaması: izleme ekibi, operatör ve destek ekipleri arasında çağrı takibi.
 
@@ -8,6 +8,9 @@ Test profilleri ayrı örnek makineler görür ve ekranlarda SAHA TESTİ etiketi
 test geri bildirimi ekler. Devam sırası [ROADMAP.md](ROADMAP.md) içindedir.
 1.2.3, çağrı türüne göre hazır nedenler, şirket filtreli makine sorguları ve
 emülatörde sınanmış Firestore yetki kurallarını ekler.
+1.3.0, admin çalışan listesi ve vardiya takvimi, ekiplerin haftalık planı,
+gün sonu raporu, ertesi güne not/önemli uyarı ve kişi bazında okundu kaydı ekler.
+Kullanım ve sınırlar: [ROSTER.md](ROSTER.md).
 Hazırlıkta projede yayımlanmış bildirim işlevi bulunmadığı ve faturalandırmanın
 kapalı olduğu doğrulandı; ilk deneme iki uygulama açıkken yapılmalıdır.
 
@@ -44,10 +47,10 @@ flutter run
 
 Proje: `C:\Users\alper\StudioProjects\factory_check_app`.
 
-GitHub'a yükleme Firebase'e dağıtım yapmaz. `security/firestore.rules` kuralları
-yerelde 15 emülatör testiyle doğrulanmıştır; bu kaynak sürümünün hazırlanması
-sırasında canlıya yayımlanmamıştır. Önceki çalışma kapsamında, sahibinin onayıyla
-eski iki kullanıcı ve dokuz makinenin eksik şirket alanları tamamlanmıştır.
+GitHub'a yükleme Firebase'e dağıtım yapmaz. Bu çalışma kapsamında
+`security/firestore.rules` kuralları test edilip `factory-check` projesine
+yayımlandı. Başka Firebase projesi kullanan kurulumlar kuralları ayrıca dağıtmalıdır.
+Eski iki kullanıcı ve dokuz makinenin şirket alanları sahibinin onayıyla tamamlandı.
 Yeni kurulumlarda bütün kullanıcı ve makinelere açık `companyId` atanmalıdır.
 
 ## Eklenen akış
@@ -217,7 +220,7 @@ firebase emulators:exec --only firestore --project demo-factory-check --config s
 Emülatör yalnızca `127.0.0.1` üzerinde çalışır; canlı Firebase'e bağlanmaz.
 Testler şirket ayrımı, rol değiştirme yasağı, işlem geçişleri, sahiplik,
 olay kayıtları, altı çağrılık vardiya devri ve eski çağrılarla uyumluluğu kapsar.
-Son doğrulama: 61 Flutter testi, 15 güvenlik testi, temiz `flutter analyze` ve
+Son doğrulama: 73 Flutter testi, 24 güvenlik testi, temiz `flutter analyze` ve
 başarılı debug APK derlemesi.
 
 Yönetim araçları `tool/` altındadır. `prepare_company_access.cjs` için

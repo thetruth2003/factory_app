@@ -93,10 +93,9 @@ profil alanlarını kullanır. Test makineleri `fieldtest_1`, `fieldtest_2`,
 `fieldtest_3` kimliklerine sahiptir. Çağrı, rapor, devir ve bildirim aboneliği
 aynı test şirketi üzerinden çalışır. Normal kullanıcıların arayüzünde örnek
 makineler gösterilmez; test kullanıcısı arayüzünde eski fabrika makineleri
-gösterilmez. Bu istemci ayrımı sunucuda erişim koruması değildir: 11 Ekim 2026'da
-okunan canlı Firestore kuralı bütün oturum açmış hesaplara bütün belgelerde
-okuma/yazma izni veriyordu. Test hesaplarını yalnızca denemeyi yapan iki kişiye
-verin; gerçek kullanım öncesinde şirket ve rol kuralları hazırlanmalıdır.
+gösterilmez. 1.3.0 ile şirket ve rol sınırlarını uygulayan Firestore kuralları
+test edilip yayımlandı. Test hesaplarını yalnızca denemeyi yapan iki kişiye verin.
+Takvim ve devir notlarının deneme adımları [ROSTER.md](ROSTER.md) içindedir.
 
 `tool/provision_field_test.cjs`, mevcut kayıtlara dokunmadan test hesaplarını ve
 makinelerini oluşturur. Tekrar çalıştırmak mevcut şifreleri, açık çağrıları

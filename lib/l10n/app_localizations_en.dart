@@ -509,7 +509,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Confirm that you want to update the reported production state.';
 
   @override
-  String get reportSummary => 'Call summary';
+  String get reportSummary => 'Shift summary';
 
   @override
   String get roleViewer => 'Viewer';
@@ -786,4 +786,166 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reasonTechnicalCheck => 'Technical check needed';
+
+  @override
+  String get roster => 'Shift calendar';
+
+  @override
+  String get staff => 'Employees';
+
+  @override
+  String get rosterHelp =>
+      'Poland time · Monday–Sunday. This shows planned shifts, not attendance.';
+
+  @override
+  String get weekOnly =>
+      'You can view your team’s current week only. On Sunday, next week’s names stay hidden; you can still leave a note for tomorrow’s team.';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get tomorrow => 'Tomorrow';
+
+  @override
+  String get chooseDate => 'Choose date';
+
+  @override
+  String get addShift => 'Schedule shift';
+
+  @override
+  String get editShift => 'Edit shift';
+
+  @override
+  String get shiftStart => 'Start';
+
+  @override
+  String get shiftEnd => 'End';
+
+  @override
+  String get nightShiftHelp =>
+      'An earlier end time means the following day. One shift per person per day, up to 16 hours. When 02:00–02:59 repeats at the clock change, the first occurrence is used.';
+
+  @override
+  String get noShifts => 'No shifts scheduled for this day.';
+
+  @override
+  String get noEmployees => 'No active employees available to schedule.';
+
+  @override
+  String get activeEmployee => 'Active employee';
+
+  @override
+  String get inactiveEmployee => 'Inactive employee';
+
+  @override
+  String get staffHelp =>
+      'Employees with company accounts. Deactivation blocks app access and preserves history.';
+
+  @override
+  String get changeEmployeeStatus => 'Change employee access?';
+
+  @override
+  String get scheduled => 'Scheduled';
+
+  @override
+  String get shiftCancelled => 'Shift cancelled';
+
+  @override
+  String get cancelShift => 'Cancel shift';
+
+  @override
+  String get cancelShiftHelp =>
+      'This shift will be cancelled and kept in the calendar history.';
+
+  @override
+  String get endReport => 'End-of-shift report';
+
+  @override
+  String get writeReport => 'Write shift report';
+
+  @override
+  String get reportProblems => 'Problems encountered';
+
+  @override
+  String get reportFollowUp => 'Checks for the next shift';
+
+  @override
+  String get reportHelp =>
+      'Reports cannot be changed after saving. Submit after the shift starts and within 24 hours of its end. Leave a separate handover note to show an alert on the next day’s home screen.';
+
+  @override
+  String get noReport => 'No end-of-shift report yet.';
+
+  @override
+  String get dailyIssues => 'Calls related to this shift';
+
+  @override
+  String get dailyIssuesHelp =>
+      'Calls reported by or currently assigned to this person that overlap the shift. Also check handover reports for work reassigned later.';
+
+  @override
+  String get dayHandovers => 'Handovers written during the shift';
+
+  @override
+  String get teamNotes => 'Handover notes and alerts';
+
+  @override
+  String get leaveNote => 'Leave handover note';
+
+  @override
+  String get importantNote => 'Important / check required';
+
+  @override
+  String get markRead => 'Mark as read';
+
+  @override
+  String get readNote => 'Read';
+
+  @override
+  String get noteHelp =>
+      'The note appears on your team’s home screen on the selected day. Each person acknowledges it separately.';
+
+  @override
+  String get noNotes => 'No handover notes for this day.';
+
+  @override
+  String get readReceipts => 'Read by';
+
+  @override
+  String get noReaders => 'Not read yet.';
+
+  @override
+  String get nextTeam => 'Tomorrow’s team';
+
+  @override
+  String get nextWeekHidden =>
+      'Tomorrow starts a new week. The plan opens Monday; you can leave your team a note now.';
+
+  @override
+  String get invalidShift =>
+      'Check the shift name and times. Maximum duration is 16 hours.';
+
+  @override
+  String get shiftOverlap =>
+      'These times overlap this employee’s shift on an adjacent day.';
+
+  @override
+  String get reportLocked =>
+      'A shift with a report cannot be edited or cancelled.';
+
+  @override
+  String get reportTime =>
+      'Submit after the shift starts and within 24 hours of its end.';
+
+  @override
+  String get dstTime =>
+      'This wall time does not exist during Poland’s spring clock change. Choose another time.';
+
+  @override
+  String get onlineRoster =>
+      'Waiting for a server connection to verify the current roster.';
+
+  @override
+  String get save => 'Save';
 }

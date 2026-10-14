@@ -509,7 +509,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get confirmState => 'Potwierdź zmianę zgłoszonego stanu produkcji.';
 
   @override
-  String get reportSummary => 'Podsumowanie zgłoszeń';
+  String get reportSummary => 'Podsumowanie zmiany';
 
   @override
   String get roleViewer => 'Obserwator';
@@ -787,4 +787,166 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get reasonTechnicalCheck => 'Potrzebna kontrola techniczna';
+
+  @override
+  String get roster => 'Grafik zmian';
+
+  @override
+  String get staff => 'Pracownicy';
+
+  @override
+  String get rosterHelp =>
+      'Czas polski · poniedziałek–niedziela. To grafik zmian, nie ewidencja obecności.';
+
+  @override
+  String get weekOnly =>
+      'Widzisz tylko bieżący tydzień swojego zespołu. W niedzielę nazwiska z kolejnego tygodnia pozostają ukryte; nadal możesz zostawić notatkę na jutro.';
+
+  @override
+  String get yesterday => 'Wczoraj';
+
+  @override
+  String get tomorrow => 'Jutro';
+
+  @override
+  String get chooseDate => 'Wybierz datę';
+
+  @override
+  String get addShift => 'Zaplanuj zmianę';
+
+  @override
+  String get editShift => 'Edytuj zmianę';
+
+  @override
+  String get shiftStart => 'Początek';
+
+  @override
+  String get shiftEnd => 'Koniec';
+
+  @override
+  String get nightShiftHelp =>
+      'Godzina końca wcześniejsza od początku oznacza następny dzień. Jedna zmiana na osobę dziennie, do 16 godzin. Przy powtórzeniu 02:00–02:59 podczas zmiany czasu używane jest pierwsze wystąpienie.';
+
+  @override
+  String get noShifts => 'Brak zaplanowanych zmian na ten dzień.';
+
+  @override
+  String get noEmployees => 'Brak aktywnych pracowników do zaplanowania.';
+
+  @override
+  String get activeEmployee => 'Aktywny pracownik';
+
+  @override
+  String get inactiveEmployee => 'Nieaktywny pracownik';
+
+  @override
+  String get staffHelp =>
+      'Pracownicy z kontem firmowym. Dezaktywacja blokuje dostęp do aplikacji i zachowuje historię.';
+
+  @override
+  String get changeEmployeeStatus => 'Zmienić dostęp pracownika?';
+
+  @override
+  String get scheduled => 'Zaplanowano';
+
+  @override
+  String get shiftCancelled => 'Zmiana anulowana';
+
+  @override
+  String get cancelShift => 'Anuluj zmianę';
+
+  @override
+  String get cancelShiftHelp =>
+      'Zmiana zostanie anulowana i pozostanie w historii grafiku.';
+
+  @override
+  String get endReport => 'Raport końca zmiany';
+
+  @override
+  String get writeReport => 'Napisz raport zmiany';
+
+  @override
+  String get reportProblems => 'Napotkane problemy';
+
+  @override
+  String get reportFollowUp => 'Co powinna sprawdzić następna zmiana';
+
+  @override
+  String get reportHelp =>
+      'Po zapisaniu raportu nie można zmienić. Złóż go po rozpoczęciu zmiany, do 24 godzin od jej końca. Zostaw osobną notatkę, aby wyświetlić ostrzeżenie na ekranie głównym następnego dnia.';
+
+  @override
+  String get noReport => 'Brak raportu końca zmiany.';
+
+  @override
+  String get dailyIssues => 'Zgłoszenia związane z tą zmianą';
+
+  @override
+  String get dailyIssuesHelp =>
+      'Zgłoszenia tej osoby lub obecnie jej przypisane, pokrywające się ze zmianą. Sprawdź też raporty przekazania zadań później przypisanych innym.';
+
+  @override
+  String get dayHandovers => 'Przekazania zapisane podczas zmiany';
+
+  @override
+  String get teamNotes => 'Notatki i ostrzeżenia';
+
+  @override
+  String get leaveNote => 'Zostaw notatkę';
+
+  @override
+  String get importantNote => 'Ważne / wymaga sprawdzenia';
+
+  @override
+  String get markRead => 'Oznacz jako przeczytane';
+
+  @override
+  String get readNote => 'Przeczytano';
+
+  @override
+  String get noteHelp =>
+      'Notatka pojawi się na ekranie głównym zespołu wybranego dnia. Każdy potwierdza przeczytanie osobno.';
+
+  @override
+  String get noNotes => 'Brak notatek na ten dzień.';
+
+  @override
+  String get readReceipts => 'Przeczytane przez';
+
+  @override
+  String get noReaders => 'Jeszcze nie przeczytano.';
+
+  @override
+  String get nextTeam => 'Zespół na jutro';
+
+  @override
+  String get nextWeekHidden =>
+      'Jutro zaczyna się nowy tydzień. Grafik otworzy się w poniedziałek; już teraz możesz zostawić notatkę.';
+
+  @override
+  String get invalidShift =>
+      'Sprawdź nazwę i godziny zmiany. Maksymalny czas to 16 godzin.';
+
+  @override
+  String get shiftOverlap =>
+      'Godziny nakładają się na zmianę tego pracownika w sąsiednim dniu.';
+
+  @override
+  String get reportLocked =>
+      'Zmiany z raportem nie można edytować ani anulować.';
+
+  @override
+  String get reportTime =>
+      'Raport można złożyć po rozpoczęciu zmiany, do 24 godzin od jej końca.';
+
+  @override
+  String get dstTime =>
+      'Ta godzina nie istnieje podczas wiosennej zmiany czasu w Polsce. Wybierz inną.';
+
+  @override
+  String get onlineRoster =>
+      'Oczekiwanie na połączenie z serwerem w celu sprawdzenia grafiku.';
+
+  @override
+  String get save => 'Zapisz';
 }

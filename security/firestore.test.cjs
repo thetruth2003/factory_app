@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {initializeTestEnvironment, assertSucceeds, assertFails} = require('@firebase/rules-unit-testing');
 const {doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, collection, query, where,
-  writeBatch, serverTimestamp: stamp, Timestamp, deleteField} = require('firebase/firestore');
+  writeBatch, runTransaction, serverTimestamp: stamp, Timestamp, deleteField} = require('firebase/firestore');
 let env;
 const profiles = {
   watch: {companyId: 'factory', role: 'watcher', displayName: 'Watch'},
@@ -258,4 +258,142 @@ test('legacy call without team, assignee or machine state can still be claimed a
   await assertSucceeds(transition('op', 'acknowledged'));
   await assertSucceeds(transition('op', 'in_progress'));
   await assertSucceeds(transition('op', 'resolved'));
+});
+// Calendar access and report integrity regression tests.
+const DAY = 86400000;
+const dateInPoland = (value = new Date()) => {
+  const parts = new Intl.DateTimeFormat('en-CA', {timeZone: 'Europe/Warsaw', year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(value);
+  const get = type => Number(parts.find(p => p.type === type).value);
+  return new Date(Date.UTC(get('year'),get('month')-1,get('day')));
+};
+function midnightPoland(day) {
+  let candidate = day.getTime();
+  for(let i=0;i<3;i++) {
+    const text = new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Warsaw',timeZoneName:'shortOffset'}).formatToParts(new Date(candidate)).find(p=>p.type==='timeZoneName').value;
+    candidate = day.getTime() - Number(text.replace('GMT',''))*3600000;
+  }
+  return Timestamp.fromMillis(candidate);
+}
+function dates() {
+  const day = dateInPoland();
+  const monday = new Date(+day - ((day.getUTCDay()+6)%7)*DAY);
+  return {day, monday};
+}
+function weekPath(monday) {return `companies/factory/roster_weeks/${monday.toISOString().slice(0,10)}`;}
+function weekData(monday) {return {startAt:midnightPoland(monday),endAt:midnightPoland(new Date(+monday+7*DAY))};}
+function shiftData(uid='op', day=dates().day) {
+  const start=midnightPoland(day), p=profiles[uid];
+  return {uid,name:p.displayName,team:p.role,day:Timestamp.fromDate(day),label:'Morning',startAt:start,endAt:Timestamp.fromMillis(start.toMillis()+8*3600000),cancelled:false,createdAt:stamp(),updatedAt:stamp(),updatedByUid:'admin'};
+}
+async function seedRoster(monday=dates().monday, uid='op') {
+  const path=weekPath(monday), data=shiftData(uid, monday);
+  await env.withSecurityRulesDisabled(async context=> {
+    await setDoc(doc(context.firestore(),path),weekData(monday));
+    await setDoc(doc(context.firestore(),`${path}/shifts/s`),data);
+  });
+  return path;
+}
+test('admin lists same-company staff, changes active status; workers cannot list or self-promote', async()=> {
+  await assertSucceeds(getDocs(query(collection(db('admin'),'users'),where('companyId','==','factory'))));
+  await assertFails(getDocs(collection(db('admin'),'users')));
+  await assertFails(getDocs(query(collection(db('op'),'users'),where('companyId','==','factory'))));
+  await assertFails(updateDoc(doc(db('admin'),'users/admin'),{isActive:false}));
+  await assertFails(updateDoc(doc(db('admin'),'users/op'),{role:'admin'}));
+  await assertSucceeds(updateDoc(doc(db('admin'),'users/op'),{isActive:false}));
+  await assertFails(getDoc(doc(db('op'),'machines/m')));
+  await assertSucceeds(updateDoc(doc(db('admin'),'users/op'),{isActive:true}));
+  await assertSucceeds(getDoc(doc(db('op'),'machines/m')));
+});
+test('admin creates and edits a shift; immutable identity and worker write restrictions hold', async()=> {
+  const {monday}=dates(), base=weekPath(monday), store=db('admin'), batch=writeBatch(store);
+  await assertSucceeds(getDoc(doc(store,`${base}/shifts/empty`)));
+  batch.set(doc(store,base),weekData(monday)); batch.set(doc(store,`${base}/shifts/s`),shiftData());
+  await assertSucceeds(batch.commit());
+  await assertSucceeds(updateDoc(doc(store,`${base}/shifts/s`),{label:'Packing',updatedAt:stamp()}));
+  await assertFails(updateDoc(doc(db('op'),`${base}/shifts/s`),{label:'Forged',updatedAt:stamp(),updatedByUid:'op'}));
+  await assertFails(updateDoc(doc(store,`${base}/shifts/s`),{uid:'op2',name:profiles.op2.displayName,updatedAt:stamp()}));
+  await assertFails(deleteDoc(doc(store,`${base}/shifts/s`)));
+});
+test('worker sees only own team in the current week; admin reads every week', async()=> {
+  const {monday}=dates(), current=await seedRoster(), old=await seedRoster(new Date(+monday-7*DAY)), future=await seedRoster(new Date(+monday+7*DAY));
+  await assertSucceeds(getDocs(query(collection(db('op'),`${current}/shifts`),where('team','==','operator'))));
+  await assertFails(getDocs(collection(db('op'),`${current}/shifts`)));
+  await assertFails(getDocs(query(collection(db('watch'),`${current}/shifts`),where('team','==','operator'))));
+  for(const path of [old,future]) {
+    await assertFails(getDocs(query(collection(db('op'),`${path}/shifts`),where('team','==','operator'))));
+    await assertFails(getDoc(doc(db('op'),`${path}/shifts/s`)));
+    await assertSucceeds(getDocs(collection(db('admin'),`${path}/shifts`)));
+  }
+  await assertFails(getDoc(doc(db('pilot'),`${current}/shifts/s`)));
+});
+test('week windows correctly cover Poland spring/fall DST and cannot be widened', async()=> {
+  for(const iso of ['2026-03-23','2026-10-19','2026-12-28']) {
+    const monday=new Date(iso+'T00:00:00Z'), base=weekPath(monday);
+    await assertSucceeds(setDoc(doc(db('admin'),base),weekData(monday)));
+    await assertFails(updateDoc(doc(db('admin'),base),{endAt:Timestamp.fromMillis(+monday+30*DAY)}));
+  }
+  await assertFails(setDoc(doc(db('admin'),'companies/factory/roster_weeks/bad'),{startAt:Timestamp.now(),endAt:Timestamp.fromMillis(Date.now()+7*DAY)}));
+});
+test('shift report is own-only, immutable, and locks schedule edits and cancellation', async()=> {
+  const path=await seedRoster(), ref=`${path}/shifts/s`;
+  await env.withSecurityRulesDisabled(async c=>updateDoc(doc(c.firestore(),ref),{startAt:Timestamp.fromMillis(Date.now()-3600000),endAt:Timestamp.fromMillis(Date.now()+3600000)}));
+  const report=uid=>({summary:'Line clear',problems:'Film jam',followUp:'Check roll',createdByUid:uid,createdByName:profiles[uid].displayName,createdAt:stamp()});
+  await assertFails(setDoc(doc(db('op2'),`${ref}/reports/end`),report('op2')));
+  await assertFails(setDoc(doc(db('admin'),`${ref}/reports/end`),report('admin')));
+  await assertSucceeds(setDoc(doc(db('op'),`${ref}/reports/end`),report('op')));
+  await assertSucceeds(getDocs(collection(db('op2'),`${ref}/reports`)));
+  await assertSucceeds(getDoc(doc(db('admin'),`${ref}/reports/end`)));
+  await assertFails(updateDoc(doc(db('op'),`${ref}/reports/end`),{summary:'Changed'}));
+  await assertFails(updateDoc(doc(db('admin'),ref),{cancelled:true,updatedAt:stamp(),updatedByUid:'admin'}));
+});
+test('future or expired shifts cannot receive reports; own recent old-week detail is permitted', async()=> {
+  const path=await seedRoster(), ref=`${path}/shifts/s`;
+  const report={summary:'Done',problems:'',followUp:'',createdByUid:'op',createdByName:profiles.op.displayName,createdAt:stamp()};
+  for(const shiftTime of [Date.now()+DAY,Date.now()-3*DAY]) {
+    await env.withSecurityRulesDisabled(async c=>updateDoc(doc(c.firestore(),ref),{startAt:Timestamp.fromMillis(shiftTime),endAt:Timestamp.fromMillis(shiftTime+3600000)}));
+    await assertFails(setDoc(doc(db('op'),`${ref}/reports/end`),report));
+  }
+  const old=await seedRoster(new Date(+dates().monday-7*DAY));
+  await env.withSecurityRulesDisabled(async c=>updateDoc(doc(c.firestore(),`${old}/shifts/s`),{startAt:Timestamp.fromMillis(Date.now()-3600000),endAt:Timestamp.fromMillis(Date.now()+3600000)}));
+  await assertSucceeds(getDoc(doc(db('op'),`${old}/shifts/s`)));
+  await assertFails(getDoc(doc(db('op2'),`${old}/shifts/s`)));
+  await assertFails(getDocs(query(collection(db('op'),`${old}/shifts`),where('team','==','operator'))));
+});
+test('team notes appear only for today/tomorrow and own team; read receipts are per-user', async()=> {
+  const day=dates().day, p='companies/factory/team_notes/n', note={team:'operator',targetDay:Timestamp.fromDate(day),body:'Check conveyor',important:true,createdByUid:'op',createdByName:profiles.op.displayName,createdAt:stamp()};
+  await assertSucceeds(getDoc(doc(db('op'),p)));
+  await assertSucceeds(setDoc(doc(db('op'),p),note));
+  await assertSucceeds(getDocs(query(collection(db('op2'),'companies/factory/team_notes'),where('targetDay','==',Timestamp.fromDate(day)),where('team','==','operator'))));
+  await assertFails(getDoc(doc(db('watch'),p)));
+  await assertFails(getDoc(doc(db('pilot'),p)));
+  await assertFails(setDoc(doc(db('op'),p+'2'),{...note,team:'watcher'}));
+  await assertFails(setDoc(doc(db('op'),p+'3'),{...note,targetDay:Timestamp.fromMillis(+day+2*DAY)}));
+  await assertFails(updateDoc(doc(db('op'),p),{body:'Changed'}));
+  await assertSucceeds(getDoc(doc(db('op2'),`${p}/reads/op2`)));
+  await assertSucceeds(setDoc(doc(db('op2'),`${p}/reads/op2`),{name:profiles.op2.displayName,at:stamp()}));
+  await assertFails(setDoc(doc(db('op2'),`${p}/reads/op`),{name:profiles.op.displayName,at:stamp()}));
+  await assertSucceeds(getDocs(collection(db('op'),`${p}/reads`)));
+  await assertSucceeds(getDocs(collection(db('admin'),`${p}/reads`)));
+  await assertFails(getDocs(collection(db('op2'),`${p}/reads`)));
+  await env.withSecurityRulesDisabled(async c=>updateDoc(doc(c.firestore(),p),{targetDay:Timestamp.fromMillis(+day-DAY)}));
+  await assertFails(getDoc(doc(db('op2'),p)));
+  await assertSucceeds(getDoc(doc(db('admin'),p)));
+});
+test('admin schedule transaction reads absent neighbors/reports before first assignment', async()=> {
+  const {day,monday}=dates(), base=weekPath(monday), store=db('admin');
+  await assertSucceeds(runTransaction(store,async tx=> {
+    await tx.get(doc(store,'users/op'));
+    await tx.get(doc(store,`${base}/shifts/new`));
+    await tx.get(doc(store,`${base}/shifts/new/reports/end`));
+    await tx.get(doc(store,`${base}/shifts/yesterday`));
+    await tx.get(doc(store,`${base}/shifts/tomorrow`));
+    tx.set(doc(store,base),weekData(monday));
+    tx.set(doc(store,`${base}/shifts/new`),shiftData('op',day));
+  }));
+});
+test('an unplanned week header reads as absent, without exposing unscoped shifts', async()=> {
+  const base=weekPath(dates().monday);
+  const result=await assertSucceeds(getDoc(doc(db('op'),base)));
+  assert.equal(result.exists(),false);
+  await assertFails(getDocs(collection(db('op'),`${base}/shifts`)));
 });

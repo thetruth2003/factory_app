@@ -6,7 +6,18 @@ service cloud.firestore {
     function company() { return profile().companyId; }
     function role() { return profile().get('role', 'viewer'); }
     function environment() { return profile().get('environment', 'production'); }
-    function member(id) { return signedIn() && company() == id; }
+    function member(id) { return signedIn() && company() == id && profile().get('isActive', true); }
+    function admin() { return role() == 'admin'; }
+    function ownTeam() { return role() == 'technician' ? 'maintenance' : role(); }
+    // EU clock changes occur at 01:00 UTC on the last Sunday of March/October.
+    function polishClock(t) {
+      let march = timestamp.date(t.year(), 3, 31);
+      let october = timestamp.date(t.year(), 10, 31);
+      let summer = march - duration.value(march.dayOfWeek() % 7, 'd') + duration.value(1, 'h');
+      let winter = october - duration.value(october.dayOfWeek() % 7, 'd') + duration.value(1, 'h');
+      return t + duration.value(t >= summer && t < winter ? 2 : 1, 'h');
+    }
+    function factoryDay() { return polishClock(request.time).date(); }
     function reporter() { return role() in ['watcher', 'operator', 'maintenance', 'technician', 'quality', 'warehouse', 'admin', 'supervisor']; }
     function manager() { return reporter() && role() != 'watcher'; }
     function supervisor() { return role() in ['admin', 'supervisor']; }
@@ -65,8 +76,12 @@ service cloud.firestore {
         || (data.kind == 'support' && code in ['operator_help', 'technical_check']);
     }
     match /users/{uid} {
-      allow get: if signedIn() && uid == request.auth.uid;
-      allow list, write: if false;
+      allow get: if signedIn() && (uid == request.auth.uid || (admin() && member(resource.data.companyId)));
+      allow list: if admin() && member(resource.data.companyId);
+      allow update: if admin() && member(resource.data.companyId)
+        && uid != request.auth.uid && resource.data.role != 'admin'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isActive'])
+        && request.resource.data.isActive is bool;
     }
     match /machines/{id} {
       allow read: if member(resource.data.companyId);
@@ -214,6 +229,78 @@ service cloud.firestore {
     }
     match /companies/{companyId} {
       allow read: if member(companyId);
+      match /roster_weeks/{weekId} {
+        function currentWeek() {
+          let w = get(/databases/$(database)/documents/companies/$(companyId)/roster_weeks/$(weekId)).data;
+          return request.time >= w.startAt && request.time < w.endAt;
+        }
+        function validWeek(d) {
+          return d.keys().hasOnly(['startAt', 'endAt']) && d.startAt is timestamp && d.endAt is timestamp
+            && polishClock(d.startAt).date() == polishClock(d.startAt)
+            && polishClock(d.startAt).dayOfWeek() == 1
+            && polishClock(d.endAt) == polishClock(d.startAt) + duration.value(7, 'd');
+        }
+        allow get: if member(companyId) && (resource == null || admin() || (request.time >= resource.data.startAt && request.time < resource.data.endAt));
+        allow list: if member(companyId) && (admin() || (request.time >= resource.data.startAt && request.time < resource.data.endAt));
+        allow create: if member(companyId) && admin() && validWeek(request.resource.data);
+        allow update: if member(companyId) && admin() && request.resource.data == resource.data;
+        match /shifts/{shiftId} {
+          function shift() { return get(/databases/$(database)/documents/companies/$(companyId)/roster_weeks/$(weekId)/shifts/$(shiftId)).data; }
+          function ownRecent(s) { return s.uid == request.auth.uid && request.time >= s.startAt && request.time <= s.endAt + duration.value(24, 'h'); }
+          function canReadShift(s) { return admin() || (currentWeek() && s.team == ownTeam()); }
+          function validShift(s) {
+            let p = get(/databases/$(database)/documents/users/$(s.uid)).data;
+            let w = getAfter(/databases/$(database)/documents/companies/$(companyId)/roster_weeks/$(weekId)).data;
+            return s.keys().hasOnly(['uid','name','team','day','label','startAt','endAt','cancelled','createdAt','updatedAt','updatedByUid'])
+              && p.companyId == companyId && p.get('isActive', true) && p.get('environment', 'production') == environment()
+              && s.name == p.displayName && s.team == (p.role == 'technician' ? 'maintenance' : p.role)
+              && s.team in ['operator','watcher','maintenance','quality','warehouse','supervisor','admin']
+              && text(s.label, 80) && s.cancelled == false && s.day is timestamp && s.startAt is timestamp && s.endAt is timestamp
+              && polishClock(s.startAt).date() == s.day && s.startAt >= w.startAt && s.startAt < w.endAt
+              && s.endAt > s.startAt && s.endAt <= s.startAt + duration.value(16, 'h')
+              && s.updatedAt == request.time && s.updatedByUid == request.auth.uid;
+          }
+          allow get: if member(companyId) && (admin() || (resource != null && (canReadShift(resource.data) || ownRecent(resource.data))));
+          allow list: if member(companyId) && canReadShift(resource.data);
+          allow create: if member(companyId) && admin() && validShift(request.resource.data) && request.resource.data.createdAt == request.time;
+          allow update: if member(companyId) && admin()
+            && !exists(/databases/$(database)/documents/companies/$(companyId)/roster_weeks/$(weekId)/shifts/$(shiftId)/reports/end)
+            && request.resource.data.uid == resource.data.uid && request.resource.data.day == resource.data.day
+            && request.resource.data.createdAt == resource.data.createdAt
+            && (validShift(request.resource.data) || (request.resource.data.cancelled == true
+              && request.resource.data.updatedAt == request.time && request.resource.data.updatedByUid == request.auth.uid
+              && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['cancelled','updatedAt','updatedByUid'])));
+          match /reports/{reportId} {
+            allow read: if member(companyId) && (admin() || canReadShift(shift()) || ownRecent(shift()));
+            allow create: if member(companyId) && reportId == 'end' && reporter() && ownRecent(shift()) && shift().cancelled == false
+              && request.resource.data.keys().hasOnly(['summary','problems','followUp','createdByUid','createdByName','createdAt'])
+              && request.resource.data.createdByUid == request.auth.uid && request.resource.data.createdByName == profile().displayName
+              && request.resource.data.createdAt == request.time && text(request.resource.data.summary, 2000)
+              && request.resource.data.problems is string && request.resource.data.problems.size() <= 2000
+              && request.resource.data.followUp is string && request.resource.data.followUp.size() <= 2000;
+          }
+        }
+      }
+      match /team_notes/{noteId} {
+        function canReadNote(n) { return admin() || (n.team == ownTeam() && n.targetDay >= factoryDay() && n.targetDay <= factoryDay() + duration.value(1, 'd')); }
+        function note() { return get(/databases/$(database)/documents/companies/$(companyId)/team_notes/$(noteId)).data; }
+        allow get: if member(companyId) && (resource == null || canReadNote(resource.data));
+        allow list: if member(companyId) && canReadNote(resource.data);
+        allow create: if member(companyId) && reporter()
+          && request.resource.data.keys().hasOnly(['team','targetDay','body','important','createdByUid','createdByName','createdAt'])
+          && request.resource.data.team in ['operator','watcher','maintenance','quality','warehouse','supervisor','admin']
+          && (admin() || request.resource.data.team == ownTeam())
+          && request.resource.data.targetDay in [factoryDay(), factoryDay() + duration.value(1, 'd')]
+          && text(request.resource.data.body, 2000) && request.resource.data.important is bool
+          && request.resource.data.createdByUid == request.auth.uid && request.resource.data.createdByName == profile().displayName
+          && request.resource.data.createdAt == request.time;
+        match /reads/{uid} {
+          allow get: if member(companyId) && canReadNote(note()) && (uid == request.auth.uid || admin() || note().createdByUid == request.auth.uid);
+          allow list: if member(companyId) && canReadNote(note()) && (admin() || note().createdByUid == request.auth.uid);
+          allow create: if member(companyId) && uid == request.auth.uid && canReadNote(note())
+            && request.resource.data.keys().hasOnly(['name','at']) && request.resource.data.name == profile().displayName && request.resource.data.at == request.time;
+        }
+      }
       match /test_feedback/{id} {
         allow read: if member(companyId);
         allow create: if member(companyId) && reporter() && environment() == 'training'

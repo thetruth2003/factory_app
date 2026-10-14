@@ -508,7 +508,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Makinenin bildirilen üretim durumunu değiştirmek istediğinizi doğrulayın.';
 
   @override
-  String get reportSummary => 'Çağrı özeti';
+  String get reportSummary => 'Vardiyanın özeti';
 
   @override
   String get roleViewer => 'Görüntüleyici';
@@ -785,4 +785,166 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get reasonTechnicalCheck => 'Teknik kontrol gerekiyor';
+
+  @override
+  String get roster => 'Vardiya takvimi';
+
+  @override
+  String get staff => 'Çalışanlar';
+
+  @override
+  String get rosterHelp =>
+      'Polonya saati · Pazartesi–Pazar. Bu ekran planlanan vardiyaları gösterir; giriş-çıkış kaydı değildir.';
+
+  @override
+  String get weekOnly =>
+      'Yalnızca kendi ekibinizin bu haftaki planını görebilirsiniz. Pazar günü gelecek haftanın isimleri açılmaz; yarın için ekibinize not bırakabilirsiniz.';
+
+  @override
+  String get yesterday => 'Dün';
+
+  @override
+  String get tomorrow => 'Yarın';
+
+  @override
+  String get chooseDate => 'Tarih seç';
+
+  @override
+  String get addShift => 'Vardiya planla';
+
+  @override
+  String get editShift => 'Vardiyayı düzenle';
+
+  @override
+  String get shiftStart => 'Başlangıç';
+
+  @override
+  String get shiftEnd => 'Bitiş';
+
+  @override
+  String get nightShiftHelp =>
+      'Bitiş başlangıçtan erkense vardiya ertesi gün biter. Kişi başına günde bir vardiya, en fazla 16 saat. Saat değişiminde 02:00–02:59 tekrarlanırsa ilk oluşum kullanılır.';
+
+  @override
+  String get noShifts => 'Bu gün için vardiya planı yok.';
+
+  @override
+  String get noEmployees => 'Planlanabilecek aktif çalışan yok.';
+
+  @override
+  String get activeEmployee => 'Aktif çalışan';
+
+  @override
+  String get inactiveEmployee => 'Pasif çalışan';
+
+  @override
+  String get staffHelp =>
+      'Şirket hesabı bulunan çalışanlar. Pasifleştirme uygulama erişimini kapatır; geçmiş kayıtları silmez.';
+
+  @override
+  String get changeEmployeeStatus => 'Çalışanın erişim durumunu değiştir?';
+
+  @override
+  String get scheduled => 'Planlandı';
+
+  @override
+  String get shiftCancelled => 'Vardiya iptal edildi';
+
+  @override
+  String get cancelShift => 'Vardiyayı iptal et';
+
+  @override
+  String get cancelShiftHelp =>
+      'Bu plan iptal edilecek; kaydı takvimde kalacak.';
+
+  @override
+  String get endReport => 'Gün sonu raporu';
+
+  @override
+  String get writeReport => 'Gün sonu raporu yaz';
+
+  @override
+  String get reportProblems => 'Karşılaşılan sorunlar';
+
+  @override
+  String get reportFollowUp => 'Sonraki vardiyanın kontrol etmesi gerekenler';
+
+  @override
+  String get reportHelp =>
+      'Rapor kaydedildikten sonra değiştirilemez. Vardiya başladıktan sonra ve bitişinden itibaren 24 saat içinde yazılır. Ertesi günün ekranında uyarı göstermek için ayrıca devir notu bırakın.';
+
+  @override
+  String get noReport => 'Henüz gün sonu raporu yok.';
+
+  @override
+  String get dailyIssues => 'Bu vardiyayla ilişkili çağrılar';
+
+  @override
+  String get dailyIssuesHelp =>
+      'Bu kişinin bildirdiği veya şu anda üstlendiği, vardiya süresiyle çakışan çağrılar. Geçmişte el değiştiren işler için devir raporlarını da inceleyin.';
+
+  @override
+  String get dayHandovers => 'Vardiyada yazılan devir kayıtları';
+
+  @override
+  String get teamNotes => 'Devir notları ve uyarılar';
+
+  @override
+  String get leaveNote => 'Devir notu bırak';
+
+  @override
+  String get importantNote => 'Önemli / kontrol gerekiyor';
+
+  @override
+  String get markRead => 'Okudum';
+
+  @override
+  String get readNote => 'Okundu';
+
+  @override
+  String get noteHelp =>
+      'Not, seçilen gün kendi ekibiniz uygulamayı açtığında ana ekranda görünür. Her çalışan ayrı ayrı okundu işaretler.';
+
+  @override
+  String get noNotes => 'Bu gün için devir notu yok.';
+
+  @override
+  String get readReceipts => 'Okuyanlar';
+
+  @override
+  String get noReaders => 'Henüz okunmadı.';
+
+  @override
+  String get nextTeam => 'Yarınki ekip';
+
+  @override
+  String get nextWeekHidden =>
+      'Yarın yeni hafta başlıyor. Plan pazartesi açılır; ekibinize bugünden not bırakabilirsiniz.';
+
+  @override
+  String get invalidShift =>
+      'Vardiya adını ve saatlerini kontrol edin. Süre en fazla 16 saat olmalı.';
+
+  @override
+  String get shiftOverlap =>
+      'Bu çalışanın bitişik gündeki vardiyasıyla saatler çakışıyor.';
+
+  @override
+  String get reportLocked =>
+      'Raporu yazılmış vardiya değiştirilemez veya iptal edilemez.';
+
+  @override
+  String get reportTime =>
+      'Rapor vardiya başladıktan sonra ve bitişinden itibaren 24 saat içinde yazılabilir.';
+
+  @override
+  String get dstTime =>
+      'Bu saat Polonya’da yaz saati geçişinde mevcut değil. Başka bir saat seçin.';
+
+  @override
+  String get onlineRoster =>
+      'Güncel vardiya planı için sunucu bağlantısı bekleniyor.';
+
+  @override
+  String get save => 'Kaydet';
 }

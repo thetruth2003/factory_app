@@ -62,6 +62,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('Paketleme filmi sıkıştı'), findsOneWidget);
+      await tester.ensureVisible(find.text('Paketleme filmi sıkıştı'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Paketleme filmi sıkıştı'));
       await tester.pumpAndSettle();
       final claim = find.text('Gördüm, üstlen');

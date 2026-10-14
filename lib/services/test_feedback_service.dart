@@ -43,7 +43,7 @@ class TestFeedbackService {
         'ease': ease,
         'notes': notes.trim(),
         'locale': locale,
-        'appVersion': '1.2.3+6',
+        'appVersion': '1.3.0+7',
       });
     });
   }

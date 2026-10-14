@@ -1039,7 +1039,7 @@ abstract class AppLocalizations {
   /// No description provided for @reportSummary.
   ///
   /// In en, this message translates to:
-  /// **'Call summary'**
+  /// **'Shift summary'**
   String get reportSummary;
 
   /// No description provided for @roleViewer.
@@ -1533,6 +1533,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Technical check needed'**
   String get reasonTechnicalCheck;
+
+  /// No description provided for @roster.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift calendar'**
+  String get roster;
+
+  /// No description provided for @staff.
+  ///
+  /// In en, this message translates to:
+  /// **'Employees'**
+  String get staff;
+
+  /// No description provided for @rosterHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Poland time · Monday–Sunday. This shows planned shifts, not attendance.'**
+  String get rosterHelp;
+
+  /// No description provided for @weekOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'You can view your team’s current week only. On Sunday, next week’s names stay hidden; you can still leave a note for tomorrow’s team.'**
+  String get weekOnly;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
+
+  /// No description provided for @chooseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get chooseDate;
+
+  /// No description provided for @addShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule shift'**
+  String get addShift;
+
+  /// No description provided for @editShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit shift'**
+  String get editShift;
+
+  /// No description provided for @shiftStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get shiftStart;
+
+  /// No description provided for @shiftEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get shiftEnd;
+
+  /// No description provided for @nightShiftHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'An earlier end time means the following day. One shift per person per day, up to 16 hours. When 02:00–02:59 repeats at the clock change, the first occurrence is used.'**
+  String get nightShiftHelp;
+
+  /// No description provided for @noShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'No shifts scheduled for this day.'**
+  String get noShifts;
+
+  /// No description provided for @noEmployees.
+  ///
+  /// In en, this message translates to:
+  /// **'No active employees available to schedule.'**
+  String get noEmployees;
+
+  /// No description provided for @activeEmployee.
+  ///
+  /// In en, this message translates to:
+  /// **'Active employee'**
+  String get activeEmployee;
+
+  /// No description provided for @inactiveEmployee.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive employee'**
+  String get inactiveEmployee;
+
+  /// No description provided for @staffHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Employees with company accounts. Deactivation blocks app access and preserves history.'**
+  String get staffHelp;
+
+  /// No description provided for @changeEmployeeStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Change employee access?'**
+  String get changeEmployeeStatus;
+
+  /// No description provided for @scheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get scheduled;
+
+  /// No description provided for @shiftCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift cancelled'**
+  String get shiftCancelled;
+
+  /// No description provided for @cancelShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel shift'**
+  String get cancelShift;
+
+  /// No description provided for @cancelShiftHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'This shift will be cancelled and kept in the calendar history.'**
+  String get cancelShiftHelp;
+
+  /// No description provided for @endReport.
+  ///
+  /// In en, this message translates to:
+  /// **'End-of-shift report'**
+  String get endReport;
+
+  /// No description provided for @writeReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Write shift report'**
+  String get writeReport;
+
+  /// No description provided for @reportProblems.
+  ///
+  /// In en, this message translates to:
+  /// **'Problems encountered'**
+  String get reportProblems;
+
+  /// No description provided for @reportFollowUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Checks for the next shift'**
+  String get reportFollowUp;
+
+  /// No description provided for @reportHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports cannot be changed after saving. Submit after the shift starts and within 24 hours of its end. Leave a separate handover note to show an alert on the next day’s home screen.'**
+  String get reportHelp;
+
+  /// No description provided for @noReport.
+  ///
+  /// In en, this message translates to:
+  /// **'No end-of-shift report yet.'**
+  String get noReport;
+
+  /// No description provided for @dailyIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Calls related to this shift'**
+  String get dailyIssues;
+
+  /// No description provided for @dailyIssuesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Calls reported by or currently assigned to this person that overlap the shift. Also check handover reports for work reassigned later.'**
+  String get dailyIssuesHelp;
+
+  /// No description provided for @dayHandovers.
+  ///
+  /// In en, this message translates to:
+  /// **'Handovers written during the shift'**
+  String get dayHandovers;
+
+  /// No description provided for @teamNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Handover notes and alerts'**
+  String get teamNotes;
+
+  /// No description provided for @leaveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave handover note'**
+  String get leaveNote;
+
+  /// No description provided for @importantNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Important / check required'**
+  String get importantNote;
+
+  /// No description provided for @markRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as read'**
+  String get markRead;
+
+  /// No description provided for @readNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get readNote;
+
+  /// No description provided for @noteHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'The note appears on your team’s home screen on the selected day. Each person acknowledges it separately.'**
+  String get noteHelp;
+
+  /// No description provided for @noNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'No handover notes for this day.'**
+  String get noNotes;
+
+  /// No description provided for @readReceipts.
+  ///
+  /// In en, this message translates to:
+  /// **'Read by'**
+  String get readReceipts;
+
+  /// No description provided for @noReaders.
+  ///
+  /// In en, this message translates to:
+  /// **'Not read yet.'**
+  String get noReaders;
+
+  /// No description provided for @nextTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow’s team'**
+  String get nextTeam;
+
+  /// No description provided for @nextWeekHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow starts a new week. The plan opens Monday; you can leave your team a note now.'**
+  String get nextWeekHidden;
+
+  /// No description provided for @invalidShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the shift name and times. Maximum duration is 16 hours.'**
+  String get invalidShift;
+
+  /// No description provided for @shiftOverlap.
+  ///
+  /// In en, this message translates to:
+  /// **'These times overlap this employee’s shift on an adjacent day.'**
+  String get shiftOverlap;
+
+  /// No description provided for @reportLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'A shift with a report cannot be edited or cancelled.'**
+  String get reportLocked;
+
+  /// No description provided for @reportTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit after the shift starts and within 24 hours of its end.'**
+  String get reportTime;
+
+  /// No description provided for @dstTime.
+  ///
+  /// In en, this message translates to:
+  /// **'This wall time does not exist during Poland’s spring clock change. Choose another time.'**
+  String get dstTime;
+
+  /// No description provided for @onlineRoster.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a server connection to verify the current roster.'**
+  String get onlineRoster;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _AppLocalizationsDelegate
