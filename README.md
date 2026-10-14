@@ -98,11 +98,11 @@ Roller: `operator`, `watcher`, `maintenance`, `technician`, `quality`,
 - Profildeki şirket kodu mevcut incident kayıtlarının `createdByCompanyId`
   değeriyle eşleşmelidir.
 
-Bu kontroller istemci davranışıdır. 11 Ekim 2026'da okunan canlı Firestore
-kuralı, oturum açmış bütün kullanıcılara bütün belge yollarında okuma/yazma
-izni veriyordu; şirket ve rol ayrımını sunucuda uygulamıyor. Storage kuralları
-incelenmedi. Üretime geçmeden önce kullanıcı rolü, şirket üyeliği, izin verilen
-alanlar ve işlem geçişleri için sunucu kuralları yazılıp test edilmelidir.
+Şirket üyeliği, aktif hesap, rol ve izin verilen işlem geçişleri
+`security/firestore.rules` ile sunucuda da doğrulanır. Önceden açık olan
+Firestore kuralları 1.3.0 hazırlığında test edilen kurallarla değiştirildi.
+Storage kuralları ayrıca incelenmelidir; Firestore denetimi fotoğraf depolama
+izinlerinin doğrulandığı anlamına gelmez.
 
 ## Mevcut verilerle uyumluluk ve sınırlar
 
@@ -141,11 +141,11 @@ sorumlusu tüm ekiplerin devrini alabilir. Ortak hesapla teslim eden ve alan ki�
 bu akış için kişisel kullanıcı hesapları gerekir. Liste 30 kayıt gösterir,
 "Daha fazla göster" ile geçmiş kayıtlar yüklenir.
 
-**Yeni yollar için canlı Firestore kuralları ayrıca hazırlanıp doğrulanmalıdır.**
 Şirket kapsamındaki okuma, rol kontrolü, vardiya kaydının değiştirilemezliği,
 tek alıcı tarafından kabul, sorumluluk aktarımı ve duruş aralıklarının ilgili
-çağrıyla tutarlılığı sunucuda doğrulanmadan ticari kullanıma hazır sayılmaz.
-Bu depoda canlı güvenlik kuralları yoktur ve bu güncellemede dağıtım yapılmadı.
+çağrıyla tutarlılığı için kurallar `security/firestore.rules` içinde tutulur.
+Bu kurallar mevcut Firebase projesine yayımlandı; başka projeye kurulumda ayrıca
+dağıtılmalıdır. Saha doğrulaması ve arka plan bildirimi hazırlığı devam eder.
 
 Her makine için tek aktif çağrı politikası korunur. Tekrar bildirim aktif çağrıyı
 açar; ek bilgi not olarak yazılabilir. Bağımsız birden çok arıza desteği henüz yok.

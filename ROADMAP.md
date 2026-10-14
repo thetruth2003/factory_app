@@ -5,7 +5,7 @@ birinin üstlenmesi ve sonucun iki tarafta görünmesi.
 
 ## Bu pakette hazır — 1.3.0
 
-- İki rol, ayrı test şirketi ve üç örnek makine.
+- Üç rol, dört test hesabı (admin, iki operatör, izleme), ayrı test şirketi ve üç örnek makine.
 - Çağrı açma, üstlenme, müdahale ve notla sonuçlandırma.
 - Üretim duruşunu ayrıca izleme, geçmiş, dönem raporu ve vardiya devri.
 - Uygulama açıkken yeni çağrı için görünür uyarı ve Android iznine bağlı ses.
@@ -17,6 +17,7 @@ birinin üstlenmesi ve sonucun iki tarafta görünmesi.
 - Çalışan için kendi ekibinin mevcut haftası ve yarınki ekip.
 - Vardiyaya bağlı değiştirilemez gün sonu raporu ve ilgili çağrılar/devir kayıtları.
 - Bugüne/yarına ekip notu, önemli uyarı ve kişi bazında okundu kaydı.
+- 14–16 Ekim için örnek vardiyalar ve mevcut planları koruyan deneme hazırlık aracı.
 
 ## Fabrikaya götürmeden önce
 

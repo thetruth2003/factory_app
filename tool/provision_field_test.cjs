@@ -37,9 +37,12 @@ async function main() {
   const users = [
     {email: 'testizleme@company.local', role: 'watcher', name: 'Test İzleme'},
     {email: 'testoperator@company.local', role: 'operator', name: 'Test Operatör'},
+    {email: 'testadmin@company.local', role: 'admin', name: 'Test Yöneticisi'},
+    {email: 'testoperator2@company.local', role: 'operator', name: 'Test Operatör 2'},
   ];
   const writes = [];
   const created = [];
+  let commitAttempted = false;
   function fields(data) {
     return Object.fromEntries(Object.entries(data).map(([key, value]) => [key, {stringValue: value}]));
   }
@@ -57,11 +60,13 @@ async function main() {
         created.push(found.uid);
       }
       user.uid = found.uid;
+      if (found.disabled) throw new Error('An existing test account is disabled; nothing reactivated.');
       const profile = await request(`${endpoint}/users/${user.uid}`, {optional: true});
       if (profile) {
         if (profile.fields?.companyId?.stringValue !== companyId ||
             profile.fields?.environment?.stringValue !== 'training' ||
-            profile.fields?.role?.stringValue !== user.role) {
+            profile.fields?.role?.stringValue !== user.role ||
+            profile.fields?.isActive?.booleanValue === false) {
           throw new Error('Existing test login has a different profile; no existing profile changed.');
         }
       } else {
@@ -82,9 +87,24 @@ async function main() {
           section: 'TEST', reportedState: 'unknown', activeStatus: 'none', activeCategory: 'green'});
       }
     }
-    if (writes.length) await request(`${endpoint}:commit`, {method: 'POST', body: {writes}});
+    if (writes.length) {
+      commitAttempted = true;
+      await request(`${endpoint}:commit`, {method: 'POST', body: {writes}});
+    }
   } catch (error) {
-    for (const uid of created) await auth.deleteUser(uid);
+    // A lost commit response may mean Firestore saved, or is still saving,
+    // profiles. Preserve the new accounts if that outcome is unknown.
+    if (commitAttempted && created.length) {
+      console.error('Profile commit was not confirmed; newly created accounts preserved for inspection.');
+    }
+    for (const uid of commitAttempted ? [] : created) {
+      try {
+        const profile = await request(`${endpoint}/users/${uid}`, {optional: true});
+        if (!profile) await auth.deleteUser(uid);
+      } catch (_) {
+        console.error('Could not confirm cleanup; newly created account preserved for inspection.');
+      }
+    }
     throw error;
   }
   console.log(JSON.stringify({provisioned: true, companyId, createdDocuments: writes.length}));

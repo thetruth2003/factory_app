@@ -50,13 +50,15 @@ erişim için telefon saatini değil kendi saatini kullanır. Polonya'daki 167/1
 saatlik yaz/kış geçiş haftaları testlidir. Yaz geçişinde olmayan 02:00–02:59 saatleri
 reddedilir; sonbaharda tekrarlanan saatlerin ilk oluşumu kullanılır.
 
-Deneme: aynı şirketteki adminle bugüne iki operatör vardiyası ekleyin; operatörle
-haftalık planı açın; vardiyası başlayan operatörle rapor ve önemli not kaydedin;
-diğer operatörle notu okuyup Okudum deyin; adminle raporu ve okuyanları kontrol edin.
-Üretim/test şirketleri ayrıdır. Hazır iki saha hesabı farklı ekiplerdedir; kendi
-aralarında operatör ekip notu testi yapamazlar. Takvim denemesi için aynı test
-şirketinde admin ve iki operatör hesabı gerekir. Gerçek fabrika planına sahte
-vardiya eklenmedi.
+Deneme hesapları aynı test şirketinde hazır: `testadmin`, `testoperator`,
+`testoperator2`, `testizleme`. Şifreleri yerel `FIELD_TEST_CREDENTIALS.local.md`
+dosyasındadır. 14–16 Ekim 2026 için üçer örnek vardiya hazırlanmıştır.
+Operatörle haftalık planı açın; kendi vardiyasına rapor ve ekibine önemli not
+kaydedin; diğer operatörle Okudum deyin; adminle raporu ve okuyanları kontrol edin.
+İki cihazda hesap değiştirerek uygulanacak adımlar [FIELD_TEST.md](FIELD_TEST.md)
+içindedir. İzleme hesabı farklı ekipte olduğu için operatör ekip notunu göremez.
+Başka bir tarihte admin yeni plan ekleyebilir veya hazırlık aracı çalıştırılabilir.
+Üretim/test şirketleri ayrıdır; gerçek fabrika planına sahte vardiya eklenmedi.
 
 Veri: `companies/{company}/roster_weeks/{monday}/shifts/{day_uid}`;
 rapor `reports/end`; not `team_notes/{id}`; okundu `reads/{uid}`.
